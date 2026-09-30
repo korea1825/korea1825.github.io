@@ -783,10 +783,20 @@
             });
         }
 
+        function nextWhiskyNo() {
+            let max = 0;
+            whiskyData.forEach(w => {
+                const m = String(w.no || '').match(/\d+/);
+                if (m) max = Math.max(max, parseInt(m[0], 10));
+            });
+            return 'No.' + String(max + 1).padStart(2, '0');
+        }
+
         function openAddModal() {
             document.getElementById('editId').value = '';
             document.getElementById('modalTitle').innerText = '위스키 추가';
             document.getElementById('whiskyForm').reset();
+            document.getElementById('inputNo').value = nextWhiskyNo();
             document.getElementById('btnDelete').classList.add('hidden');
             document.getElementById('whiskyModal').classList.remove('hidden');
         }
