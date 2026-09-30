@@ -137,7 +137,7 @@
                     <h1 class="text-base font-bold gold-gradient-text tracking-wide uppercase">MY WHISKY COLLECTION POSTER</h1>
                     <span id="cloudStatusBadge" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium">
                         <i class="fa-brands fa-google text-[9px]"></i>
-                        <span>Google Cloud 연결 중...</span>
+                        <span>Google Drive 로그인 필요</span>
                     </span>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-gray-400">
@@ -296,7 +296,7 @@
             
             <div class="flex items-center gap-2 border-b border-sky-500/30 pb-3 mb-4">
                 <i class="fa-brands fa-google text-2xl text-sky-400"></i>
-                <h3 class="text-lg font-bold text-sky-300">Google Cloud (Firestore) 데이터 연동</h3>
+                <h3 class="text-lg font-bold text-sky-300">Google Drive 데이터 연동</h3>
             </div>
             
             <div class="space-y-4 text-xs">
@@ -304,15 +304,15 @@
                 <div class="bg-neutral-950 border border-neutral-800 rounded-xl p-4 space-y-2">
                     <div class="flex items-center justify-between">
                         <span class="text-gray-400 font-medium">연동 서비스:</span>
-                        <span class="text-sky-300 font-bold">Google Cloud Firestore Database</span>
+                        <span class="text-sky-300 font-bold">Google Drive (whisky_collection.json)</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-gray-400 font-medium">연동 상태:</span>
-                        <span id="modalCloudStatusText" class="text-emerald-400 font-bold">실시간 동기화 활성</span>
+                        <span id="modalCloudStatusText" class="text-amber-400 font-bold">로그인 필요</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-gray-400 font-medium">사용자 식별 ID:</span>
-                        <span id="modalCloudUserId" class="text-gray-300 font-mono text-[10px] bg-neutral-800 px-2 py-0.5 rounded">불러오는 중...</span>
+                        <span class="text-gray-400 font-medium">저장 위치:</span>
+                        <span id="modalCloudUserId" class="text-gray-300 font-mono text-[10px] bg-neutral-800 px-2 py-0.5 rounded">로그인 후 표시</span>
                     </div>
                 </div>
 
@@ -323,7 +323,7 @@
                         <span>구글 계정 연동 및 로그인</span>
                     </h4>
                     <p class="text-gray-300 text-[11px] leading-relaxed">
-                        Google 계정으로 로그인하면 내 모든 기기(스마트폰, 태블릿, PC)에서 동일한 위스키 컬렉션 데이터를 구글 클라우드로 실시간 자동 공유할 수 있습니다.
+                        Google 계정으로 로그인하면 위스키 데이터가 내 Google Drive의 whisky_collection.json 파일에 자동 저장되고, 다른 기기에서도 같은 계정으로 로그인해 불러올 수 있습니다. 이 앱이 만든 파일에만 접근하며 Drive의 다른 파일은 볼 수 없습니다.
                     </p>
                     <button onclick="triggerGoogleCloudLogin()" class="w-full bg-white hover:bg-gray-100 text-gray-800 font-bold py-2.5 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow">
                         <svg class="w-4 h-4" viewBox="0 0 24 24">
@@ -332,7 +332,7 @@
                             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
                             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
                         </svg>
-                        <span>Google 계정으로 구글 클라우드 동기화</span>
+                        <span>Google 계정으로 로그인 (Drive 동기화)</span>
                     </button>
                 </div>
 
@@ -363,7 +363,7 @@
                 <div class="pt-2">
                     <button onclick="manualSyncToGoogleCloud()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow">
                         <i class="fa-solid fa-arrows-rotate"></i>
-                        <span>현재 데이터를 Google Cloud에 즉시 강제 수동 동기화</span>
+                        <span>현재 데이터를 Google Drive에 즉시 저장</span>
                     </button>
                 </div>
             </div>
@@ -1061,186 +1061,158 @@
         });
     </script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        // ===== Google 로그인 + Google Drive 저장 (drive.file 범위) =====
+        const GOOGLE_CLIENT_ID = '530851584920-73hdkv70dlsdcgidffl8h8jg279fs9ml.apps.googleusercontent.com';
+        const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+        const DRIVE_FILE_NAME = 'whisky_collection.json';
 
-        // Global App & Firebase Config Resolution
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'whisky-collection-app';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyDemoKeyWhiskyCollectionSyncApp",
-            authDomain: "whisky-collection.firebaseapp.com",
-            projectId: "whisky-collection",
-            storageBucket: "whisky-collection.appspot.com",
-            messagingSenderId: "1029384756",
-            appId: "1:1029384756:web:abcd1234efgh"
-        };
+        let tokenClient = null, accessToken = null, tokenExpiry = 0;
+        let driveFileId = null, saveTimer = null, driveReady = false;
 
-        let app, auth, db;
-        let currentUser = null;
-        let unsubscribeSnapshot = null;
-
-        function updateCloudUI(status, message, userId = null) {
+        function updateCloudUI(status, message, detail = null) {
             const badge = document.getElementById('cloudStatusBadge');
-            const uidDisplay = document.getElementById('cloudUserIdDisplay');
-            const modalStatusText = document.getElementById('modalCloudStatusText');
-            const modalUserId = document.getElementById('modalCloudUserId');
-
+            const uid = document.getElementById('cloudUserIdDisplay');
+            const modalStatus = document.getElementById('modalCloudStatusText');
+            const modalUser = document.getElementById('modalCloudUserId');
+            const styles = {
+                syncing: ['bg-sky-500/20 text-sky-300 border-sky-500/40', 'fa-solid fa-spinner fa-spin'],
+                synced: ['bg-emerald-500/20 text-emerald-300 border-emerald-500/40', 'fa-brands fa-google'],
+                error: ['bg-red-500/20 text-red-300 border-red-500/40', 'fa-solid fa-triangle-exclamation'],
+                idle: ['bg-amber-500/20 text-amber-300 border-amber-500/40', 'fa-brands fa-google']
+            };
+            const s = styles[status] || styles.idle;
             if (badge) {
-                if (status === 'syncing') {
-                    badge.className = "bg-sky-500/20 text-sky-300 border border-sky-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
-                    badge.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-[9px]"></i><span>${message}</span>`;
-                } else if (status === 'synced') {
-                    badge.className = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
-                    badge.innerHTML = `<i class="fa-brands fa-google text-[9px]"></i><span>${message}</span>`;
-                } else if (status === 'error') {
-                    badge.className = "bg-red-500/20 text-red-300 border border-red-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
-                    badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-[9px]"></i><span>${message}</span>`;
-                }
+                badge.className = `${s[0]} border text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium`;
+                badge.innerHTML = `<i class="${s[1]} text-[9px]"></i><span>${message}</span>`;
             }
-
-            if (userId && uidDisplay) {
-                uidDisplay.innerText = `(Google Cloud ID: ${userId})`;
-                uidDisplay.classList.remove('hidden');
+            if (detail && uid) { uid.innerText = `(${detail})`; uid.classList.remove('hidden'); }
+            if (modalStatus) {
+                modalStatus.innerText = message;
+                modalStatus.className = status === 'synced' ? 'text-emerald-400 font-bold' : (status === 'error' ? 'text-red-400 font-bold' : 'text-amber-400 font-bold');
             }
-
-            if (modalStatusText) {
-                modalStatusText.innerText = message;
-                modalStatusText.className = status === 'synced' ? "text-emerald-400 font-bold" : "text-amber-400 font-bold";
-            }
-            if (modalUserId && userId) {
-                modalUserId.innerText = userId;
-            }
+            if (modalUser && detail) modalUser.innerText = detail;
         }
 
-        async function initCloudSync() {
-            try {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
+        function driveFetch(url, options = {}) {
+            return fetch(url, { ...options, headers: { ...(options.headers || {}), Authorization: `Bearer ${accessToken}` } });
+        }
 
-                updateCloudUI('syncing', 'Google Cloud 인증 처리 중...');
+        function requestToken(prompt) {
+            return new Promise((resolve, reject) => {
+                if (!tokenClient) return reject(new Error('Google 로그인 준비 중'));
+                tokenClient.callback = (resp) => {
+                    if (resp.error) return reject(new Error(resp.error));
+                    accessToken = resp.access_token;
+                    tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+                    localStorage.setItem('whiskyDriveLinked', '1');
+                    resolve();
+                };
+                tokenClient.error_callback = (err) => reject(new Error(err.type || 'popup_error'));
+                tokenClient.requestAccessToken({ prompt });
+            });
+        }
 
-                // Authenticate before queries
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+        async function ensureToken() {
+            if (accessToken && Date.now() < tokenExpiry) return true;
+            try { await requestToken(''); return true; } catch (e) { return false; }
+        }
 
-                onAuthStateChanged(auth, async (user) => {
-                    if (!user) return;
-                    currentUser = user;
-                    const userId = user.uid;
+        async function findDriveFile() {
+            const q = encodeURIComponent(`name='${DRIVE_FILE_NAME}' and trashed=false`);
+            const r = await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${q}&spaces=drive&fields=files(id,modifiedTime)&orderBy=modifiedTime desc`);
+            if (!r.ok) throw new Error('파일 검색 실패 ' + r.status);
+            const data = await r.json();
+            return data.files && data.files.length ? data.files[0].id : null;
+        }
 
-                    updateCloudUI('syncing', 'Google Cloud 동기화 중...', userId);
-
-                    // Firestore Path according to Mandatory Rules
-                    const whiskiesColRef = collection(db, 'artifacts', appId, 'users', userId, 'whiskies');
-
-                    // Real-time Firestore Listener
-                    if (unsubscribeSnapshot) unsubscribeSnapshot();
-
-                    unsubscribeSnapshot = onSnapshot(whiskiesColRef, async (snapshot) => {
-                        if (snapshot.empty) {
-                            // First time cloud setup: Seed with default/local data
-                            updateCloudUI('syncing', 'Google Cloud 초기 데이터 생성 중...', userId);
-                            await seedInitialCloudData(userId, whiskyData);
-                            updateCloudUI('synced', 'Google Cloud 동기화 활성', userId);
-                        } else {
-                            const cloudItems = [];
-                            snapshot.forEach((doc) => {
-                                cloudItems.push(doc.data());
-                            });
-                            // Sort by ID or original order
-                            cloudItems.sort((a, b) => (a.id || 0) - (b.id || 0));
-                            whiskyData = cloudItems;
-                            saveToLocalStorage();
-                            renderPoster();
-                            updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', userId);
-                        }
-                    }, (err) => {
-                        console.error("Firestore onSnapshot Error:", err);
-                        updateCloudUI('error', 'Google Cloud 동기화 오류 (로컬 모드)');
-                    });
+        async function uploadToDrive(items) {
+            const body = JSON.stringify(items);
+            if (driveFileId) {
+                const r = await driveFetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body
                 });
-
-            } catch (err) {
-                console.error("Firebase Auth/Sync Initialization Error:", err);
-                updateCloudUI('error', '로컬저장소 모드 사용 중');
-            }
-        }
-
-        async function seedInitialCloudData(userId, items) {
-            if (!currentUser || !db) return;
-            try {
-                const batch = writeBatch(db);
-                items.forEach((item) => {
-                    const docRef = doc(db, 'artifacts', appId, 'users', userId, 'whiskies', String(item.id));
-                    batch.set(docRef, item);
+                if (!r.ok) throw new Error('저장 실패 ' + r.status);
+            } else {
+                const boundary = 'whisky' + Date.now();
+                const meta = JSON.stringify({ name: DRIVE_FILE_NAME, mimeType: 'application/json' });
+                const multipart = `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${body}\r\n--${boundary}--`;
+                const r = await driveFetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
+                    method: 'POST', headers: { 'Content-Type': `multipart/related; boundary=${boundary}` }, body: multipart
                 });
-                await batch.commit();
-            } catch (e) {
-                console.error("Error seeding initial cloud data:", e);
+                if (!r.ok) throw new Error('생성 실패 ' + r.status);
+                driveFileId = (await r.json()).id;
             }
         }
 
-        // Expose Google Cloud Actions to Global Scope
-        window.triggerGoogleCloudLogin = async function() {
-            if (!auth) return;
-            try {
-                updateCloudUI('syncing', 'Google 계정 로그인 중...');
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-            } catch (e) {
-                console.warn("Google Login Popup Note:", e);
-                if (!auth.currentUser) {
-                    await signInAnonymously(auth);
+        async function loadFromDrive() {
+            updateCloudUI('syncing', 'Google Drive 불러오는 중...');
+            driveFileId = await findDriveFile();
+            if (driveFileId) {
+                const r = await driveFetch(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`);
+                if (!r.ok) throw new Error('불러오기 실패 ' + r.status);
+                const items = await r.json();
+                if (Array.isArray(items) && items.length) {
+                    whiskyData = items;
+                    saveToLocalStorage();
+                    renderPoster();
                 }
+            } else {
+                await uploadToDrive(whiskyData);
             }
-        };
+            driveReady = true;
+            updateCloudUI('synced', 'Google Drive 동기화 완료', 'Drive: ' + DRIVE_FILE_NAME);
+        }
 
-        window.saveSingleWhiskyToCloud = async function(item) {
-            if (!currentUser || !db) return;
+        function scheduleSave() {
+            if (!driveReady) return;
+            clearTimeout(saveTimer);
+            updateCloudUI('syncing', 'Google Drive 저장 중...');
+            saveTimer = setTimeout(async () => {
+                try {
+                    if (!(await ensureToken())) {
+                        updateCloudUI('error', 'Drive 재로그인 필요 (Google Cloud 관리에서 로그인)');
+                        return;
+                    }
+                    await uploadToDrive(whiskyData);
+                    updateCloudUI('synced', 'Google Drive 동기화 완료', 'Drive: ' + DRIVE_FILE_NAME);
+                } catch (e) {
+                    console.error(e);
+                    updateCloudUI('error', 'Google Drive 저장 실패');
+                }
+            }, 1500);
+        }
+
+        window.triggerGoogleCloudLogin = async function () {
+            if (!tokenClient) { alert('Google 로그인 준비 중입니다. 잠시 후 다시 눌러주세요.'); return; }
             try {
-                updateCloudUI('syncing', 'Google Cloud 저장 중...');
-                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'whiskies', String(item.id));
-                await setDoc(docRef, item);
-                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
+                updateCloudUI('syncing', 'Google 로그인 중...');
+                await requestToken('consent');
+                await loadFromDrive();
             } catch (e) {
-                console.error("Cloud Save Error:", e);
-                updateCloudUI('error', 'Google Cloud 저장 실패');
+                console.warn(e);
+                updateCloudUI('error', '로그인 실패 또는 취소');
             }
         };
 
-        window.deleteSingleWhiskyFromCloud = async function(itemId) {
-            if (!currentUser || !db) return;
-            try {
-                updateCloudUI('syncing', 'Google Cloud 삭제 중...');
-                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'whiskies', String(itemId));
-                await deleteDoc(docRef);
-                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
-            } catch (e) {
-                console.error("Cloud Delete Error:", e);
-                updateCloudUI('error', 'Google Cloud 삭제 실패');
-            }
-        };
+        // 기존 코드가 호출하는 함수들: 모두 Drive 저장 예약으로 연결
+        window.saveSingleWhiskyToCloud = () => scheduleSave();
+        window.deleteSingleWhiskyFromCloud = () => scheduleSave();
+        window.syncAllDataToCloud = () => scheduleSave();
 
-        window.syncAllDataToCloud = async function(items) {
-            if (!currentUser || !db) return;
-            try {
-                updateCloudUI('syncing', 'Google Cloud 전체 동기화 중...');
-                await seedInitialCloudData(currentUser.uid, items);
-                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
-            } catch (e) {
-                console.error("Cloud Full Sync Error:", e);
-                updateCloudUI('error', 'Google Cloud 동기화 실패');
-            }
-        };
-
-        // Initialize Cloud Sync on page load
-        initCloudSync();
+        window.addEventListener('load', () => {
+            updateCloudUI('idle', 'Google Drive 로그인 필요');
+            const wait = setInterval(() => {
+                if (window.google && google.accounts && google.accounts.oauth2) {
+                    clearInterval(wait);
+                    tokenClient = google.accounts.oauth2.initTokenClient({ client_id: GOOGLE_CLIENT_ID, scope: DRIVE_SCOPE, callback: () => {} });
+                    if (localStorage.getItem('whiskyDriveLinked')) {
+                        requestToken('').then(loadFromDrive).catch(() => updateCloudUI('idle', 'Google Drive 로그인 필요'));
+                    }
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>
