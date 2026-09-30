@@ -442,6 +442,11 @@
                 </div>
 
                 <div>
+                    <label class="block text-gray-400 mb-1">구매 장소 (선택)</label>
+                    <input type="text" id="inputPlace" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="예: 이마트 트레이더스">
+                </div>
+
+                <div>
                     <label class="block text-gray-400 mb-1">특별 태그 / 비고 (선택)</label>
                     <input type="text" id="inputTag" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="예: 하이볼 전용, 2026.01.05 완병">
                 </div>
@@ -472,45 +477,45 @@
         // Default 33 Whisky Collection Dataset with updated prices
         const defaultWhiskyData = [
             // 1. Single Malts (17 bottles)
-            { id: 4, no: 'No.04', name: '더 글렌리벳 15년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 캐스크', note: '"부드러운 과일, 세리 풍미"', buyDate: '2024-09-14', price: 98900, tag: '', imgSrc: '더 글렌리벳 15년.png' },
-            { id: 5, no: 'No.05', name: '글렌그란트 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 캐스크', note: '"상큼한 과일, 버번 바닐라"', buyDate: '2024-09-14', price: 64900, tag: '', imgSrc: '글렌그란트 10년.png' },
-            { id: 7, no: 'No.07', name: '발렌타인 글렌버기 15', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '은은한 피트', note: '"은은한 스모크, 피트 캐릭터"', buyDate: '2025-06-04', price: 99900, tag: '', imgSrc: '발렌타인 글렌버기 15년.png' },
-            { id: 10, no: 'No.10', name: '맥켈란 12년 더블 캐스크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크 (아메리칸 & 유러피안 세리)', note: '"달콤한 바닐라, 세리 스파이스"', buyDate: '2025-10-09', price: 99800, tag: '', imgSrc: '맥켈란 12년 더블 캐스크.png' },
-            { id: 11, no: 'No.11', name: '벤로막 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '세리 & 버번 / 스모키 피트', note: '"클래식 스모키 피트, 과일 향"', buyDate: '2025-10-15', price: 61920, tag: '', imgSrc: '벤로막 10년.png' },
-            { id: 12, no: 'No.12', name: '라프로익 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '750ml', abv: '40.0%', cask: '버번 캐스크 / 강렬한 피트', note: '"해풍, 스모크, 메디컬 피트"', buyDate: '2025-10-18', price: 69800, tag: '', imgSrc: '라프로익 10년.png' },
-            { id: 16, no: 'No.16', name: '달모어 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 & 올로로쏘 세리', note: '"진한 세리, 시트러스, 시나몬"', buyDate: '2026-04-02', price: 88290, tag: '', imgSrc: '달모어 12년.png' },
-            { id: 17, no: 'No.17', name: '더 글렌드로낙 오드 투 더 다크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '50.8%', cask: '다크 세리 캐스크', note: '"깊은 세리, 건포도, 묵직한 오크"', buyDate: '2026-03-17', price: 159800, tag: '', imgSrc: '더 글렌드로낙 오드 투 더 다크.png' },
-            { id: 18, no: 'No.18', name: '글렌피딕 18년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '올로로쏘 세리 & 아메리칸 오크', note: '"구운 사과, 계피, 풍부한 오크"', buyDate: '2026-04-03', price: 139400, tag: '', imgSrc: '글렌피딕 18년.png' },
-            { id: 19, no: 'No.19', name: '글렌알라키 10년 그라타마코', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '와인 피니시 (Gratamacco Cask)', note: '"레드 베리, 허니, 잔잔한 스파이스"', buyDate: '2026-04-16', price: 77880, tag: '', imgSrc: '글렌알라키 10년 그라타마코.png' },
-            { id: 21, no: 'No.21', name: '글렌알라키 10년 루비포트', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '루비 포트 피니시', note: '"자두, 다크 초콜릿, 달콤함"', buyDate: '2026-04-16', price: 89800, tag: '유러피안 익스클루시브', imgSrc: '글렌알라키 10년 루비포트.png' },
-            { id: 27, no: 'No.27', name: '글렌알라키 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '영국', volume: '700ml', abv: '46.0%', cask: '세리 캐스크 풍미', note: '"꿀, 모카, 세리 노스"', buyDate: '2026-06-12', price: 87360, tag: '', imgSrc: '글렌알라키 12년.png' },
-            { id: 29, no: 'No.29', name: '더 글렌터렛 12년 2025', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.2%', cask: '수제 오크 캐스크', note: '"풍부한 과일, 스파이스"', buyDate: '2026-07-01', price: 145000, tag: '', imgSrc: '더 글렌터렛 12년 2025.png' },
-            { id: 30, no: 'No.30', name: '로얄 브라클라 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.0%', cask: '셰리 피니시', note: '"셰리, 과일, 견과류"', buyDate: '2026-07-10', price: 110000, tag: '일본잔 2개', imgSrc: '로얄 브라클라 12년.png' },
-            { id: 31, no: 'No.31', name: '글렌알라키 2014 신테이스', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '57.4%', cask: '싱글 캐스크 / CS', note: '"강렬한 캐스크 프루프 풍미"', buyDate: '2026-07-20', price: 185000, tag: '', imgSrc: '글렌알라키 2014 신테이스.png' },
-            { id: 32, no: 'No.32', name: '글렌드로락 올로로쏘 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '1000ml', abv: '43.0%', cask: '올로로쏘 셰리', note: '"묵직한 셰리, 건포도"', buyDate: '2026-08-01', price: 128000, tag: '1 L', imgSrc: '글렌드로락 올로로쏘 12년.png' },
-            { id: 33, no: 'No.33', name: '발베니 12년 더블우드', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크', note: '"꿀, 바닐라, 은은한 오크"', buyDate: '2026-08-15', price: 109000, tag: '추석세트', imgSrc: '발베니 12년 더블우드.png' },
+            { id: 4, no: 'No.04', name: '더 글렌리벳 15년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 캐스크', note: '"부드러운 과일, 세리 풍미"', buyDate: '2024-09-14', price: 98900, place: '롯데마트', tag: '', imgSrc: '더 글렌리벳 15년.png' },
+            { id: 5, no: 'No.05', name: '글렌그란트 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 캐스크', note: '"상큼한 과일, 버번 바닐라"', buyDate: '2024-09-14', price: 64900, place: '롯데마트', tag: '', imgSrc: '글렌그란트 10년.png' },
+            { id: 7, no: 'No.07', name: '발렌타인 글렌버기 15', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '은은한 피트', note: '"은은한 스모크, 피트 캐릭터"', buyDate: '2025-06-04', price: 99900, place: '홈플러스', tag: '', imgSrc: '발렌타인 글렌버기 15년.png' },
+            { id: 10, no: 'No.10', name: '맥켈란 12년 더블 캐스크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크 (아메리칸 & 유러피안 세리)', note: '"달콤한 바닐라, 세리 스파이스"', buyDate: '2025-10-09', price: 99800, place: '이마트 트레이더스', tag: '', imgSrc: '맥켈란 12년 더블 캐스크.png' },
+            { id: 11, no: 'No.11', name: '벤로막 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '세리 & 버번 / 스모키 피트', note: '"클래식 스모키 피트, 과일 향"', buyDate: '2025-10-15', price: 61920, place: 'gs24 와인플러스', tag: '', imgSrc: '벤로막 10년.png' },
+            { id: 12, no: 'No.12', name: '라프로익 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '750ml', abv: '40.0%', cask: '버번 캐스크 / 강렬한 피트', note: '"해풍, 스모크, 메디컬 피트"', buyDate: '2025-10-18', price: 69800, place: '이마트', tag: '', imgSrc: '라프로익 10년.png' },
+            { id: 16, no: 'No.16', name: '달모어 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 & 올로로쏘 세리', note: '"진한 세리, 시트러스, 시나몬"', buyDate: '2026-04-02', price: 88290, place: '홈플러스', tag: '', imgSrc: '달모어 12년.png' },
+            { id: 17, no: 'No.17', name: '더 글렌드로낙 오드 투 더 다크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '50.8%', cask: '다크 세리 캐스크', note: '"깊은 세리, 건포도, 묵직한 오크"', buyDate: '2026-03-17', price: 159800, place: '이마트 트레이더스', tag: '', imgSrc: '더 글렌드로낙 오드 투 더 다크.png' },
+            { id: 18, no: 'No.18', name: '글렌피딕 18년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '올로로쏘 세리 & 아메리칸 오크', note: '"구운 사과, 계피, 풍부한 오크"', buyDate: '2026-04-03', price: 139400, place: '이마트 트레이더스', tag: '', imgSrc: '글렌피딕 18년.png' },
+            { id: 19, no: 'No.19', name: '글렌알라키 10년 그라타마코', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '와인 피니시 (Gratamacco Cask)', note: '"레드 베리, 허니, 잔잔한 스파이스"', buyDate: '2026-04-16', price: 77880, place: '이마트 문현점', tag: '', imgSrc: '글렌알라키 10년 그라타마코.png' },
+            { id: 21, no: 'No.21', name: '글렌알라키 10년 루비포트', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '루비 포트 피니시', note: '"자두, 다크 초콜릿, 달콤함"', buyDate: '2026-04-16', price: 89800, place: '이마트 트레이더스', tag: '유러피안 익스클루시브', imgSrc: '글렌알라키 10년 루비포트.png' },
+            { id: 27, no: 'No.27', name: '글렌알라키 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '영국', volume: '700ml', abv: '46.0%', cask: '세리 캐스크 풍미', note: '"꿀, 모카, 세리 노스"', buyDate: '2026-06-12', price: 87360, place: '이마트 연제점', tag: '', imgSrc: '글렌알라키 12년.png' },
+            { id: 29, no: 'No.29', name: '더 글렌터렛 12년 2025', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.2%', cask: '수제 오크 캐스크', note: '"풍부한 과일, 스파이스"', buyDate: '2026-07-01', price: 139800, place: '이마트 트레이더스', tag: '', imgSrc: '더 글렌터렛 12년 2025.png' },
+            { id: 30, no: 'No.30', name: '로얄 브라클라 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.0%', cask: '셰리 피니시', note: '"셰리, 과일, 견과류"', buyDate: '2026-07-10', price: 98000, place: 'gs24 와인플러스', tag: '일본잔 2개', imgSrc: '로얄 브라클라 12년.png' },
+            { id: 31, no: 'No.31', name: '글렌알라키 2014 신테이스', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '57.4%', cask: '싱글 캐스크 / CS', note: '"강렬한 캐스크 프루프 풍미"', buyDate: '2026-07-20', price: 199800, place: '이마트 트레이더스', tag: '', imgSrc: '글렌알라키 2014 신테이스.png' },
+            { id: 32, no: 'No.32', name: '글렌드로락 올로로쏘 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '1000ml', abv: '43.0%', cask: '올로로쏘 셰리', note: '"묵직한 셰리, 건포도"', buyDate: '2026-08-01', price: 99800, place: '이마트 트레이더스', tag: '1 L', imgSrc: '글렌드로락 올로로쏘 12년.png' },
+            { id: 33, no: 'No.33', name: '발베니 12년 더블우드', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크', note: '"꿀, 바닐라, 은은한 오크"', buyDate: '2026-08-15', price: 96800, place: '롯데마트', tag: '추석세트', imgSrc: '발베니 12년 더블우드.png' },
 
             // 2. Bourbon (8 bottles)
-            { id: 2, no: 'No.02', name: '메이커스마크', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 카라멜, 부드러움"', buyDate: '2024-02-10', price: 54000, tag: '', imgSrc: '메이커스마크.png' },
-            { id: 6, no: 'No.06', name: '버팔로 트레이스', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 오크, 토피"', buyDate: '2024-10-01', price: 48000, tag: '', imgSrc: '버팔로 트레이스.png' },
-            { id: 8, no: 'No.08', name: '와일드터키 101 8년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '700ml', abv: '50.5%', cask: '버번 캐스크', note: '"타격감, 호밀, 바닐라"', buyDate: '2025-07-01', price: 53000, tag: '', imgSrc: '와일드터키 101 8년.png' },
-            { id: 9, no: 'No.09', name: '러셀 리저브 싱글배럴', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '55.0%', cask: '버번 캐스크', note: '"진한 바닐라, 카라멜, 오크"', buyDate: '2025-08-01', price: 115000, tag: '', imgSrc: '러셀 리저브 싱글배럴.png' },
-            { id: 14, no: 'No.14', name: '에반 윌리엄스 BIB 12년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '50.0%', cask: '버번 캐스크', note: '"고도수 바닐라, 카라멜"', buyDate: '2025-11-15', price: 45000, tag: '', imgSrc: '에반 윌리엄스 BIB 12년.png' },
-            { id: 22, no: 'No.22', name: '에반 윌리엄스 블랙', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '43.0%', cask: '버번 캐스크', note: '"가성비 버번, 달콤한 바닐라"', buyDate: '2026-05-01', price: 32000, tag: '', imgSrc: '에반 윌리엄스 블랙.png' },
-            { id: 24, no: 'No.24', name: '벤치마크 풀 프루프', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '62.5%', cask: '버번 캐스크', note: '"강렬한 62.5도 프루프"', buyDate: '2026-05-15', price: 42000, tag: '', imgSrc: '벤치마크 풀 프루프.png' },
-            { id: 28, no: 'No.28', name: '와일드터키 레어브리드', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '58.0%', cask: '배럴 프루프', note: '"강렬한 스파이스, 진한 캐릭터"', buyDate: '2026-06-20', price: 98000, tag: '', imgSrc: '와일드터키 레어브리드.png' },
+            { id: 2, no: 'No.02', name: '메이커스마크', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 카라멜, 부드러움"', buyDate: '2024-02-10', price: 48000, place: '홈플러스', tag: '', imgSrc: '메이커스마크.png' },
+            { id: 6, no: 'No.06', name: '버팔로 트레이스', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 오크, 토피"', buyDate: '2024-10-01', price: 39900, place: '롯데마트', tag: '', imgSrc: '버팔로 트레이스.png' },
+            { id: 8, no: 'No.08', name: '와일드터키 101 8년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '700ml', abv: '50.5%', cask: '버번 캐스크', note: '"타격감, 호밀, 바닐라"', buyDate: '2025-07-01', price: 45900, place: '롯데마트', tag: '', imgSrc: '와일드터키 101 8년.png' },
+            { id: 9, no: 'No.09', name: '러셀 리저브 싱글배럴', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '55.0%', cask: '버번 캐스크', note: '"진한 바닐라, 카라멜, 오크"', buyDate: '2025-08-01', price: 81600, place: 'gs24 와인플러스', tag: '', imgSrc: '러셀 리저브 싱글배럴.png' },
+            { id: 14, no: 'No.14', name: '에반 윌리엄스 BIB 12년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '50.0%', cask: '버번 캐스크', note: '"고도수 바닐라, 카라멜"', buyDate: '2025-11-15', price: 29980, place: '이마트 트레이더스', tag: '', imgSrc: '에반 윌리엄스 BIB 12년.png' },
+            { id: 22, no: 'No.22', name: '에반 윌리엄스 블랙', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '43.0%', cask: '버번 캐스크', note: '"가성비 버번, 달콤한 바닐라"', buyDate: '2026-05-01', price: 22900, place: '이마트24', tag: '', imgSrc: '에반 윌리엄스 블랙.png' },
+            { id: 24, no: 'No.24', name: '벤치마크 풀 프루프', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '62.5%', cask: '버번 캐스크', note: '"강렬한 62.5도 프루프"', buyDate: '2026-05-15', price: 51400, place: 'gs24 와인플러스', tag: '', imgSrc: '벤치마크 풀 프루프.png' },
+            { id: 28, no: 'No.28', name: '와일드터키 레어브리드', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '58.0%', cask: '배럴 프루프', note: '"강렬한 스파이스, 진한 캐릭터"', buyDate: '2026-06-20', price: 69900, place: '이마트 트레이더스', tag: '', imgSrc: '와일드터키 레어브리드.png' },
 
             // 3. Blended (7 bottles)
-            { id: 1, no: 'No.01', name: '산토리 가쿠빈', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '일본', volume: '700ml', abv: '40.0%', cask: '블렌디드', note: '"하이볼의 정석, 시트러스"', buyDate: '2024-01-05', price: 39800, tag: '2026.01.05 완병', imgSrc: '산토리 가쿠빈.png' },
-            { id: 3, no: 'No.03', name: '조니워커 블랙', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '500ml', abv: '40.0%', cask: '스모키 피트', note: '"스모키, 달콤한 과일"', buyDate: '2024-03-01', price: 32000, tag: '2026.07.16 완병', imgSrc: '조니워커 블랙.png' },
-            { id: 13, no: 'No.13', name: '조니워커 15년 셰리 피니시', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 피니시', note: '"부드러운 세리, 달콤함"', buyDate: '2025-11-01', price: 79000, tag: '', imgSrc: '조니워커 15년 셰리 피니시.png' },
-            { id: 20, no: 'No.20', name: '듀어스 15년 미즈나라', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '영국', volume: '700ml', abv: '40.0%', cask: '미즈나라 피니시', note: '"은은한 은향, 스파이스"', buyDate: '2026-04-20', price: 68000, tag: '', imgSrc: '듀어스 15년 미즈나라.png' },
-            { id: 23, no: 'No.23', name: '조니워커 그린', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '블렌디드 몰트', note: '"자연스런 은은한 피트와 과일"', buyDate: '2026-05-10', price: 85000, tag: '독일산 잔', imgSrc: '조니워커 그린.png' },
-            { id: 25, no: 'No.25', name: '노마드 리저브 10년', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.1%', cask: '아웃랜드 셰리 피니시', note: '"달콤한 세리, 바닐라"', buyDate: '2026-05-20', price: 72000, tag: '', imgSrc: '노마드 리저브 10년.png' },
-            { id: 26, no: 'No.26', name: '제임슨 블랙배럴', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '아일랜드', volume: '700ml', abv: '40.0%', cask: '이중 차드 오크', note: '"극상의 부드러움, 바닐라"', buyDate: '2026-06-01', price: 55000, tag: '', imgSrc: '제임슨 블랙배럴.png' },
+            { id: 1, no: 'No.01', name: '산토리 가쿠빈', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '일본', volume: '700ml', abv: '40.0%', cask: '블렌디드', note: '"하이볼의 정석, 시트러스"', buyDate: '2024-01-05', price: 39000, place: '홈플러스', tag: '2026.01.05 완병', imgSrc: '산토리 가쿠빈.png' },
+            { id: 3, no: 'No.03', name: '조니워커 블랙', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '500ml', abv: '40.0%', cask: '스모키 피트', note: '"스모키, 달콤한 과일"', buyDate: '2024-03-01', price: 43000, place: '홈플러스', tag: '2026.07.16 완병', imgSrc: '조니워커 블랙.png' },
+            { id: 13, no: 'No.13', name: '조니워커 15년 셰리 피니시', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 피니시', note: '"부드러운 세리, 달콤함"', buyDate: '2025-11-01', price: 59800, place: '이마트 트레이더스', tag: '', imgSrc: '조니워커 15년 셰리 피니시.png' },
+            { id: 20, no: 'No.20', name: '듀어스 15년 미즈나라', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '영국', volume: '700ml', abv: '40.0%', cask: '미즈나라 피니시', note: '"은은한 은향, 스파이스"', buyDate: '2026-04-20', price: 99800, place: '이마트 문현점', tag: '', imgSrc: '듀어스 15년 미즈나라.png' },
+            { id: 23, no: 'No.23', name: '조니워커 그린', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '블렌디드 몰트', note: '"자연스런 은은한 피트와 과일"', buyDate: '2026-05-10', price: 67800, place: 'gs24 와인플러스', tag: '독일산 잔', imgSrc: '조니워커 그린.png' },
+            { id: 25, no: 'No.25', name: '노마드 리저브 10년', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.1%', cask: '아웃랜드 셰리 피니시', note: '"달콤한 세리, 바닐라"', buyDate: '2026-05-20', price: 98100, place: '배민GS', tag: '', imgSrc: '노마드 리저브 10년.png' },
+            { id: 26, no: 'No.26', name: '제임슨 블랙배럴', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '아일랜드', volume: '700ml', abv: '40.0%', cask: '이중 차드 오크', note: '"극상의 부드러움, 바닐라"', buyDate: '2026-06-01', price: 29900, place: '이마트 연제점', tag: '', imgSrc: '제임슨 블랙배럴.png' },
 
             // 4. Tennessee (1 bottle)
-            { id: 15, no: 'No.15', name: '젠틀맨 잭', category: 'TENNESSEE WHISKY (테네시 위스키)', country: '미국', volume: '700ml', abv: '40.0%', cask: 'Charcoal Mellowed', note: '"극강의 부드러움, 단풍나무 정제"', buyDate: '2025-12-01', price: 58000, tag: '하이볼 전용', imgSrc: '젠틀맨 잭.png' }
+            { id: 15, no: 'No.15', name: '젠틀맨 잭', category: 'TENNESSEE WHISKY (테네시 위스키)', country: '미국', volume: '700ml', abv: '40.0%', cask: 'Charcoal Mellowed', note: '"극강의 부드러움, 단풍나무 정제"', buyDate: '2025-12-01', price: 29980, place: '이마트 트레이더스', tag: '하이볼 전용', imgSrc: '젠틀맨 잭.png' }
         ];
 
         // Load persisted data or default
@@ -728,13 +733,14 @@
                             <div onclick="openEditModal(${item.id})" class="gold-card-frame rounded-xl p-3 flex flex-col justify-between cursor-pointer relative group">
                                 
                                 <!-- Card Header: No. & Tag -->
-                                <div class="flex items-center justify-between text-[11px] font-bold mb-1">
-                                    <span class="text-gold tracking-wider">${item.no}</span>
-                                    ${item.tag ? `<span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded text-[10px] truncate max-w-[80px]">${item.tag}</span>` : ''}
+                                <div class="flex items-center justify-between gap-1 text-[11px] font-bold mb-1">
+                                    <span class="text-gold tracking-wider shrink-0">${item.no}</span>
+                                    ${item.place ? `<span title="${item.place}" class="inline-flex items-center gap-1 bg-neutral-800/80 text-gray-300 border border-neutral-700 px-1.5 py-0.5 rounded-full text-[9px] font-medium min-w-0"><i class="fa-solid fa-location-dot text-[8px] text-gold shrink-0"></i><span class="truncate">${item.place}</span></span>` : ''}
                                 </div>
 
                                 <!-- Bottle Image Box -->
                                 <div class="h-36 md:h-40 my-2 flex items-center justify-center p-1 relative">
+                                    ${item.tag ? `<span class="absolute left-1 top-1 z-10 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[85%]">${item.tag}</span>` : ''}
                                     <img src="${item.imgSrc}" 
                                          alt="${item.name}" 
                                          onerror="handleImageError(this, '${item.name}')" 
@@ -802,6 +808,7 @@
             document.getElementById('inputBuyDate').value = item.buyDate || '';
             document.getElementById('inputPrice').value = item.price || 0;
             document.getElementById('inputTag').value = item.tag || '';
+            document.getElementById('inputPlace').value = item.place || '';
             document.getElementById('inputImgSrc').value = item.imgSrc || '';
 
             document.getElementById('btnDelete').classList.remove('hidden');
@@ -1001,6 +1008,8 @@
                 buyDate: document.getElementById('inputBuyDate').value || '',
                 price: Number(document.getElementById('inputPrice').value || 0),
                 tag: document.getElementById('inputTag').value || '',
+                place: document.getElementById('inputPlace').value || '',
+                pf: 1,
                 imgSrc: document.getElementById('inputImgSrc').value || `${document.getElementById('inputName').value}.png`
             };
 
@@ -1161,8 +1170,29 @@
             } else {
                 await uploadToDrive(whiskyData);
             }
+            const fixed = applyPriceFix();
+            if (fixed) { _origSaveLocal(); renderPoster(); }
             driveReady = true;
             updateCloudUI('synced', 'Google Drive 동기화 완료', 'Drive: ' + DRIVE_FILE_NAME);
+            if (fixed) scheduleSave();
+        }
+
+        // 구매가격 1회 보정 (항목별 pf 표시로 중복 적용 방지)
+        const PRICE_FIX = {1: 39000, 2: 48000, 3: 43000, 6: 39900, 8: 45900, 9: 81600, 13: 59800, 14: 29980, 15: 29980, 20: 99800, 22: 22900, 23: 67800, 24: 51400, 25: 98100, 26: 29900, 28: 69900, 29: 139800, 30: 98000, 31: 199800, 32: 99800, 33: 96800};
+        function applyPriceFix() {
+            let changed = false;
+            whiskyData.forEach(it => {
+                if (it.pf) return;
+                if (PRICE_FIX[it.id] !== undefined) {
+                    if (it.price !== PRICE_FIX[it.id]) { it.price = PRICE_FIX[it.id]; changed = true; }
+                    it.pf = 1;
+                }
+            });
+            const PLACE_MAP = {1: '홈플러스', 2: '홈플러스', 3: '홈플러스', 4: '롯데마트', 5: '롯데마트', 6: '롯데마트', 7: '홈플러스', 8: '롯데마트', 9: 'gs24 와인플러스', 10: '이마트 트레이더스', 11: 'gs24 와인플러스', 12: '이마트', 13: '이마트 트레이더스', 14: '이마트 트레이더스', 15: '이마트 트레이더스', 16: '홈플러스', 17: '이마트 트레이더스', 18: '이마트 트레이더스', 19: '이마트 문현점', 20: '이마트 문현점', 21: '이마트 트레이더스', 22: '이마트24', 23: 'gs24 와인플러스', 24: 'gs24 와인플러스', 25: '배민GS', 26: '이마트 연제점', 27: '이마트 연제점', 28: '이마트 트레이더스', 29: '이마트 트레이더스', 30: 'gs24 와인플러스', 31: '이마트 트레이더스', 32: '이마트 트레이더스', 33: '롯데마트'};
+            whiskyData.forEach(it => {
+                if (it.place === undefined && PLACE_MAP[it.id] !== undefined) { it.place = PLACE_MAP[it.id]; changed = true; }
+            });
+            return changed;
         }
 
         function scheduleSave() {
