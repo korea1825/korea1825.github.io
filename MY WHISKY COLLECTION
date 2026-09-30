@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY WHISKY COLLECTION POSTER</title>
+
+    <!-- Pretendard Font (Weights 100 - 900) -->
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+            font-weight: 100;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+            font-weight: 300;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+            font-weight: 900;
+            font-display: swap;
+        }
+    </style>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+                        title: ['Pretendard', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            DEFAULT: '#dfb743',
+                            light: '#ffe89c',
+                            dark: '#9e7b1e',
+                            border: '#7a5e18',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- html2canvas for Image Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #050403;
+            color: #e5e5e5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff3c4 0%, #dfb743 50%, #9e7a1d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-card-frame {
+            background: linear-gradient(180deg, rgba(22, 19, 14, 0.95) 0%, rgba(10, 9, 7, 0.98) 100%);
+            border: 1px solid rgba(223, 183, 67, 0.35);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s ease;
+        }
+
+        .gold-card-frame:hover {
+            border-color: rgba(223, 183, 67, 0.8);
+            box-shadow: 0 6px 20px rgba(223, 183, 67, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .poster-frame {
+            background-color: #0a0907;
+            border: 2px solid #5a4613;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 30px rgba(223,183,67,0.15);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0907;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a2e10;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dfb743;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #000 !important; color: #fff !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen py-4 px-2 md:px-6">
+
+    <header class="no-print max-w-7xl mx-auto mb-6 bg-neutral-900/90 border border-gold-border/40 rounded-xl p-3 px-5 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🥃</span>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-base font-bold gold-gradient-text tracking-wide uppercase">MY WHISKY COLLECTION POSTER</h1>
+                    <span id="cloudStatusBadge" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium">
+                        <i class="fa-brands fa-google text-[9px]"></i>
+                        <span>Google Cloud 연결 중...</span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-gray-400">
+                    <span>마이 위스키 컬렉션 33병 팜플렛 메뉴판</span>
+                    <span id="cloudUserIdDisplay" class="text-[10px] text-gray-500 font-mono hidden"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+            <!-- Google Cloud Manage Button -->
+            <button onclick="openGoogleCloudModal()" class="bg-neutral-800 hover:bg-neutral-700 text-sky-300 border border-sky-500/40 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5 shadow">
+                <i class="fa-brands fa-google text-sky-400"></i>
+                <span>Google Cloud 관리</span>
+            </button>
+
+            <!-- Batch Select Files -->
+            <label class="bg-neutral-800 hover:bg-neutral-700 text-gold border border-gold-border/40 px-3 py-2 rounded-lg cursor-pointer font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>📂 사진 33개 한번에 등록</span>
+                <input type="file" multiple accept="image/*" class="hidden" onchange="handleBatchImageUpload(event)">
+            </label>
+
+            <!-- Auto Remove White Background -->
+            <button onclick="cleanAllWhiteBackgrounds()" class="bg-amber-950/80 hover:bg-amber-900 text-yellow-300 border border-gold-border/60 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5 shadow">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>🪄 외곽 흰색 배경만 스마트 제거 (PNG)</span>
+            </button>
+
+            <!-- Quick PNG Converter Modal Button -->
+            <button onclick="openBgRemoverModal()" class="bg-neutral-800 hover:bg-neutral-700 text-emerald-300 border border-emerald-500/40 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-scissors"></i>
+                <span>✂️ PNG 배경제거/다운로드 도구</span>
+            </button>
+
+            <!-- Extensions Sync -->
+            <button onclick="syncPngExtensions()" class="bg-neutral-800 hover:bg-neutral-700 text-amber-300 border border-gold-border/40 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                <span id="extSyncText">PNG 파일명 동기화</span>
+            </button>
+
+            <!-- Reset Data Button -->
+            <button onclick="resetToDefaultData()" class="bg-neutral-800 hover:bg-neutral-700 text-red-400 border border-red-500/30 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5" title="초기 데이터로 되돌리기">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>초기화</span>
+            </button>
+
+            <!-- Add Whisky Button -->
+            <button onclick="openAddModal()" class="bg-amber-600 hover:bg-amber-500 text-black font-extrabold px-3.5 py-2 rounded-lg transition shadow flex items-center gap-1.5">
+                <i class="fa-solid fa-plus"></i>
+                <span>+ 위스키 추가</span>
+            </button>
+
+            <!-- Export Image -->
+            <button onclick="exportPosterImage()" class="bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-black font-extrabold px-3.5 py-2 rounded-lg transition shadow-lg flex items-center gap-1.5">
+                <i class="fa-solid fa-file-image"></i>
+                <span>2500px+ 초고해상도 저장</span>
+            </button>
+
+            <!-- Print PDF -->
+            <button onclick="window.print()" class="bg-neutral-800 hover:bg-neutral-700 text-gray-200 border border-neutral-600 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-print"></i>
+                <span>PDF / 인쇄</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="posterContent" class="poster-frame max-w-7xl mx-auto rounded-2xl p-4 md:p-8 relative overflow-hidden">
+        
+        <!-- POSTER HEADER -->
+        <div class="text-center mb-8 border-b border-gold-border/30 pb-6 relative">
+            <div class="inline-block px-4 py-1 rounded-full border border-gold/40 text-[11px] text-gold tracking-widest uppercase mb-2 bg-amber-950/30">
+                PRIVATE LIQUOR CABINET
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black gold-gradient-text tracking-wider uppercase mb-2">
+                MY WHISKY COLLECTION
+            </h1>
+            <p class="text-xs md:text-sm text-gold-light/80 font-light tracking-wide">
+                개인 소장 위스키 팜플렛 & 테이스팅 컬렉션 메뉴판
+            </p>
+
+            <!-- STATS SUMMARY DASHBOARD -->
+            <div class="grid grid-cols-3 max-w-md mx-auto gap-3 mt-5 text-center">
+                <div class="bg-neutral-900/80 border border-gold-border/30 rounded-xl p-2.5">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">보유 수량</p>
+                    <p id="statTotalCount" class="text-base md:text-lg font-bold text-gold">총 0병</p>
+                </div>
+                <div class="bg-neutral-900/80 border border-gold-border/30 rounded-xl p-2.5">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">총 평가액</p>
+                    <p id="statTotalPrice" class="text-base md:text-lg font-bold text-emerald-400">₩ 0</p>
+                </div>
+                <div class="bg-neutral-900/80 border border-gold-border/30 rounded-xl p-2.5">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">평균 단가</p>
+                    <p id="statAvgPrice" class="text-base md:text-lg font-bold text-amber-300">₩ 0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORIES & WHISKY CARDS CONTAINER -->
+        <div id="categoriesContainer" class="space-y-10">
+            <!-- Dynamic Category Sections will be rendered here -->
+        </div>
+
+        <!-- POSTER FOOTER -->
+        <div class="mt-12 pt-6 border-t border-gold-border/30 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+            <span>CURATED BY WHISKY LOVER • ALL RIGHTS RESERVED</span>
+            <span class="text-gold/60">RESPONSIBLE DRINKING IS RECOMMENDED</span>
+        </div>
+    </main>
+
+    <!-- Single PNG Background Remover Tool Modal -->
+    <div id="bgRemoverModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-gold-border/60 rounded-xl max-w-lg w-full p-6 text-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeBgRemoverModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-lg font-bold text-gold border-b border-gold-border/30 pb-2 mb-4">✂️ 스마트 PNG 배경 제거 & 저장 도구</h3>
+            
+            <div class="space-y-4 text-xs">
+                <p class="text-gray-300">
+                    위스키 이미지(예: 조니워커 15년, 젠틀맨 잭 등)를 드래그하거나 선택하면, 병 내부 라벨은 보존하고 **외곽 흰색 배경만 투명한 PNG**로 변환합니다.
+                </p>
+
+                <div class="border-2 border-dashed border-neutral-700 hover:border-gold rounded-xl p-6 text-center cursor-pointer bg-neutral-950/50 transition relative">
+                    <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="processSingleImageTool(event)">
+                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gold mb-2"></i>
+                    <p class="font-bold text-white text-sm">이미지 파일 선택 또는 드래그</p>
+                    <p class="text-gray-400 text-[11px] mt-1">PNG, JPG, WEBP 지원 (자동 투명 PNG 추출)</p>
+                </div>
+
+                <!-- Preview Area -->
+                <div id="removerPreviewArea" class="hidden space-y-3 pt-2">
+                    <div class="text-xs font-bold text-gold">변환 결과 미리보기 (투명격자 배경)</div>
+                    <div class="w-full h-64 rounded-lg border border-neutral-800 flex items-center justify-center p-4 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:12px_12px] bg-neutral-950">
+                        <img id="removerResultImg" class="max-h-full max-w-full object-contain drop-shadow-lg" src="" alt="투명 PNG 미리보기">
+                    </div>
+                    
+                    <div class="flex gap-2 justify-end pt-2">
+                        <a id="btnDownloadPng" download="whisky_transparent.png" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-solid fa-download"></i>
+                            <span>투명 PNG 다운로드</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Cloud Sync & Backup Modal -->
+    <div id="googleCloudModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-sky-500/40 rounded-xl max-w-lg w-full p-6 text-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeGoogleCloudModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="flex items-center gap-2 border-b border-sky-500/30 pb-3 mb-4">
+                <i class="fa-brands fa-google text-2xl text-sky-400"></i>
+                <h3 class="text-lg font-bold text-sky-300">Google Cloud (Firestore) 데이터 연동</h3>
+            </div>
+            
+            <div class="space-y-4 text-xs">
+                <!-- Sync Status Box -->
+                <div class="bg-neutral-950 border border-neutral-800 rounded-xl p-4 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400 font-medium">연동 서비스:</span>
+                        <span class="text-sky-300 font-bold">Google Cloud Firestore Database</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400 font-medium">연동 상태:</span>
+                        <span id="modalCloudStatusText" class="text-emerald-400 font-bold">실시간 동기화 활성</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400 font-medium">사용자 식별 ID:</span>
+                        <span id="modalCloudUserId" class="text-gray-300 font-mono text-[10px] bg-neutral-800 px-2 py-0.5 rounded">불러오는 중...</span>
+                    </div>
+                </div>
+
+                <!-- Google Account Login Action -->
+                <div class="bg-sky-950/30 border border-sky-500/30 rounded-xl p-4 space-y-3">
+                    <h4 class="font-bold text-sky-200 text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span>구글 계정 연동 및 로그인</span>
+                    </h4>
+                    <p class="text-gray-300 text-[11px] leading-relaxed">
+                        Google 계정으로 로그인하면 내 모든 기기(스마트폰, 태블릿, PC)에서 동일한 위스키 컬렉션 데이터를 구글 클라우드로 실시간 자동 공유할 수 있습니다.
+                    </p>
+                    <button onclick="triggerGoogleCloudLogin()" class="w-full bg-white hover:bg-gray-100 text-gray-800 font-bold py-2.5 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        <span>Google 계정으로 구글 클라우드 동기화</span>
+                    </button>
+                </div>
+
+                <!-- Google Drive Backup & Restore -->
+                <div class="border-t border-neutral-800 pt-4 space-y-3">
+                    <h4 class="font-bold text-gold text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-box-archive"></i>
+                        <span>Google Cloud / Drive 파일 백업 및 복원</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="exportGoogleCloudBackup()" class="bg-neutral-800 hover:bg-neutral-700 text-sky-300 border border-sky-500/30 font-bold p-3 rounded-lg transition flex flex-col items-center justify-center gap-1 text-center">
+                            <i class="fa-solid fa-file-export text-base"></i>
+                            <span>클라우드 백업 다운로드</span>
+                            <span class="text-[9px] text-gray-400 font-normal">Google Drive 보관용 JSON</span>
+                        </button>
+
+                        <label class="bg-neutral-800 hover:bg-neutral-700 text-emerald-300 border border-emerald-500/30 font-bold p-3 rounded-lg cursor-pointer transition flex flex-col items-center justify-center gap-1 text-center">
+                            <i class="fa-solid fa-file-import text-base"></i>
+                            <span>백업 파일 복원</span>
+                            <span class="text-[9px] text-gray-400 font-normal">JSON 파일 선택</span>
+                            <input type="file" accept=".json" class="hidden" onchange="importGoogleCloudBackup(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Manual Force Sync -->
+                <div class="pt-2">
+                    <button onclick="manualSyncToGoogleCloud()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>현재 데이터를 Google Cloud에 즉시 강제 수동 동기화</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Modal -->
+    <div id="whiskyModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-neutral-900 border border-gold-border/60 rounded-xl max-w-lg w-full p-6 text-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 id="modalTitle" class="text-lg font-bold text-gold border-b border-gold-border/30 pb-2 mb-4">위스키 정보 편집</h3>
+            
+            <form id="whiskyForm" onsubmit="saveWhiskyForm(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="editId">
+                
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">번호 (No.)</label>
+                        <input type="text" id="inputNo" required class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="No.34">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-gray-400 mb-1">위스키 이름</label>
+                        <input type="text" id="inputName" required class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="예: 아드벡 10년">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">카테고리</label>
+                        <select id="inputCategory" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none">
+                            <option value="SINGLE MALT WHISKY (싱글몰트 위스키)">SINGLE MALT (싱글몰트)</option>
+                            <option value="BOURBON WHISKY (버번 위스키)">BOURBON (버번)</option>
+                            <option value="BLENDED WHISKY (블렌디드 위스키)">BLENDED (블렌디드)</option>
+                            <option value="TENNESSEE WHISKY (테네시 위스키)">TENNESSEE (테네시)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">생산국가</label>
+                        <input type="text" id="inputCountry" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="스코틀랜드">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">용량</label>
+                        <input type="text" id="inputVolume" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="700ml">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">도수 (ABV)</label>
+                        <input type="text" id="inputAbv" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="46.0%">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">캐스크 타입</label>
+                    <input type="text" id="inputCask" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="버번 캐스크 / 세리 캐스크">
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">테이스팅 노트 / 특징</label>
+                    <input type="text" id="inputNote" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder='"스모키, 스파이스, 바닐라"'>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-gray-400 mb-1">구매일자</label>
+                        <input type="date" id="inputBuyDate" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">구매 가격 (원)</label>
+                        <input type="number" id="inputPrice" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="98000">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">특별 태그 / 비고 (선택)</label>
+                    <input type="text" id="inputTag" class="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="예: 하이볼 전용, 2026.01.05 완병">
+                </div>
+
+                <div>
+                    <label class="block text-gray-400 mb-1">이미지 파일 경로 / 업로드</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="inputImgSrc" class="flex-1 bg-neutral-800 border border-neutral-700 rounded px-3 py-2 text-white focus:border-gold outline-none" placeholder="아드벡 10년.png">
+                        <label class="bg-neutral-700 hover:bg-neutral-600 px-3 py-2 rounded cursor-pointer text-gold font-bold text-xs flex items-center">
+                            사진 선택
+                            <input type="file" accept="image/*" class="hidden" onchange="handleSingleFileSelect(event)">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-neutral-800 mt-4">
+                    <button type="button" onclick="deleteCurrentWhisky()" id="btnDelete" class="bg-red-900/60 hover:bg-red-800 text-red-200 px-3 py-2 rounded transition">삭제</button>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="closeModal()" class="bg-neutral-800 hover:bg-neutral-700 text-gray-300 px-4 py-2 rounded">취소</button>
+                        <button type="submit" class="bg-gold hover:bg-yellow-400 text-black font-bold px-5 py-2 rounded">저장하기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Default 33 Whisky Collection Dataset with updated prices
+        const defaultWhiskyData = [
+            // 1. Single Malts (17 bottles)
+            { id: 4, no: 'No.04', name: '더 글렌리벳 15년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 캐스크', note: '"부드러운 과일, 세리 풍미"', buyDate: '2024-09-14', price: 98900, tag: '', imgSrc: '더 글렌리벳 15년.png' },
+            { id: 5, no: 'No.05', name: '글렌그란트 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 캐스크', note: '"상큼한 과일, 버번 바닐라"', buyDate: '2024-09-14', price: 64900, tag: '', imgSrc: '글렌그란트 10년.png' },
+            { id: 7, no: 'No.07', name: '발렌타인 글렌버기 15', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '은은한 피트', note: '"은은한 스모크, 피트 캐릭터"', buyDate: '2025-06-04', price: 99900, tag: '', imgSrc: '발렌타인 글렌버기 15년.png' },
+            { id: 10, no: 'No.10', name: '맥켈란 12년 더블 캐스크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크 (아메리칸 & 유러피안 세리)', note: '"달콤한 바닐라, 세리 스파이스"', buyDate: '2025-10-09', price: 99800, tag: '', imgSrc: '맥켈란 12년 더블 캐스크.png' },
+            { id: 11, no: 'No.11', name: '벤로막 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '세리 & 버번 / 스모키 피트', note: '"클래식 스모키 피트, 과일 향"', buyDate: '2025-10-15', price: 61920, tag: '', imgSrc: '벤로막 10년.png' },
+            { id: 12, no: 'No.12', name: '라프로익 10년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '750ml', abv: '40.0%', cask: '버번 캐스크 / 강렬한 피트', note: '"해풍, 스모크, 메디컬 피트"', buyDate: '2025-10-18', price: 69800, tag: '', imgSrc: '라프로익 10년.png' },
+            { id: 16, no: 'No.16', name: '달모어 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '버번 & 올로로쏘 세리', note: '"진한 세리, 시트러스, 시나몬"', buyDate: '2026-04-02', price: 88290, tag: '', imgSrc: '달모어 12년.png' },
+            { id: 17, no: 'No.17', name: '더 글렌드로낙 오드 투 더 다크', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '50.8%', cask: '다크 세리 캐스크', note: '"깊은 세리, 건포도, 묵직한 오크"', buyDate: '2026-03-17', price: 159800, tag: '', imgSrc: '더 글렌드로낙 오드 투 더 다크.png' },
+            { id: 18, no: 'No.18', name: '글렌피딕 18년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '올로로쏘 세리 & 아메리칸 오크', note: '"구운 사과, 계피, 풍부한 오크"', buyDate: '2026-04-03', price: 139400, tag: '', imgSrc: '글렌피딕 18년.png' },
+            { id: 19, no: 'No.19', name: '글렌알라키 10년 그라타마코', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '와인 피니시 (Gratamacco Cask)', note: '"레드 베리, 허니, 잔잔한 스파이스"', buyDate: '2026-04-16', price: 77880, tag: '', imgSrc: '글렌알라키 10년 그라타마코.png' },
+            { id: 21, no: 'No.21', name: '글렌알라키 10년 루비포트', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '48.0%', cask: '루비 포트 피니시', note: '"자두, 다크 초콜릿, 달콤함"', buyDate: '2026-04-16', price: 89800, tag: '유러피안 익스클루시브', imgSrc: '글렌알라키 10년 루비포트.png' },
+            { id: 27, no: 'No.27', name: '글렌알라키 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '영국', volume: '700ml', abv: '46.0%', cask: '세리 캐스크 풍미', note: '"꿀, 모카, 세리 노스"', buyDate: '2026-06-12', price: 87360, tag: '', imgSrc: '글렌알라키 12년.png' },
+            { id: 29, no: 'No.29', name: '더 글렌터렛 12년 2025', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.2%', cask: '수제 오크 캐스크', note: '"풍부한 과일, 스파이스"', buyDate: '2026-07-01', price: 145000, tag: '', imgSrc: '더 글렌터렛 12년 2025.png' },
+            { id: 30, no: 'No.30', name: '로얄 브라클라 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '46.0%', cask: '셰리 피니시', note: '"셰리, 과일, 견과류"', buyDate: '2026-07-10', price: 110000, tag: '일본잔 2개', imgSrc: '로얄 브라클라 12년.png' },
+            { id: 31, no: 'No.31', name: '글렌알라키 2014 신테이스', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '57.4%', cask: '싱글 캐스크 / CS', note: '"강렬한 캐스크 프루프 풍미"', buyDate: '2026-07-20', price: 185000, tag: '', imgSrc: '글렌알라키 2014 신테이스.png' },
+            { id: 32, no: 'No.32', name: '글렌드로락 올로로쏘 12년', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '1000ml', abv: '43.0%', cask: '올로로쏘 셰리', note: '"묵직한 셰리, 건포도"', buyDate: '2026-08-01', price: 128000, tag: '1 L', imgSrc: '글렌드로락 올로로쏘 12년.png' },
+            { id: 33, no: 'No.33', name: '발베니 12년 더블우드', category: 'SINGLE MALT WHISKY (싱글몰트 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '더블 캐스크', note: '"꿀, 바닐라, 은은한 오크"', buyDate: '2026-08-15', price: 109000, tag: '추석세트', imgSrc: '발베니 12년 더블우드.png' },
+
+            // 2. Bourbon (8 bottles)
+            { id: 2, no: 'No.02', name: '메이커스마크', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 카라멜, 부드러움"', buyDate: '2024-02-10', price: 54000, tag: '', imgSrc: '메이커스마크.png' },
+            { id: 6, no: 'No.06', name: '버팔로 트레이스', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '45.0%', cask: '버번 캐스크', note: '"바닐라, 오크, 토피"', buyDate: '2024-10-01', price: 48000, tag: '', imgSrc: '버팔로 트레이스.png' },
+            { id: 8, no: 'No.08', name: '와일드터키 101 8년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '700ml', abv: '50.5%', cask: '버번 캐스크', note: '"타격감, 호밀, 바닐라"', buyDate: '2025-07-01', price: 53000, tag: '', imgSrc: '와일드터키 101 8년.png' },
+            { id: 9, no: 'No.09', name: '러셀 리저브 싱글배럴', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '55.0%', cask: '버번 캐스크', note: '"진한 바닐라, 카라멜, 오크"', buyDate: '2025-08-01', price: 115000, tag: '', imgSrc: '러셀 리저브 싱글배럴.png' },
+            { id: 14, no: 'No.14', name: '에반 윌리엄스 BIB 12년', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '50.0%', cask: '버번 캐스크', note: '"고도수 바닐라, 카라멜"', buyDate: '2025-11-15', price: 45000, tag: '', imgSrc: '에반 윌리엄스 BIB 12년.png' },
+            { id: 22, no: 'No.22', name: '에반 윌리엄스 블랙', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '1000ml', abv: '43.0%', cask: '버번 캐스크', note: '"가성비 버번, 달콤한 바닐라"', buyDate: '2026-05-01', price: 32000, tag: '', imgSrc: '에반 윌리엄스 블랙.png' },
+            { id: 24, no: 'No.24', name: '벤치마크 풀 프루프', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '62.5%', cask: '버번 캐스크', note: '"강렬한 62.5도 프루프"', buyDate: '2026-05-15', price: 42000, tag: '', imgSrc: '벤치마크 풀 프루프.png' },
+            { id: 28, no: 'No.28', name: '와일드터키 레어브리드', category: 'BOURBON WHISKY (버번 위스키)', country: '미국', volume: '750ml', abv: '58.0%', cask: '배럴 프루프', note: '"강렬한 스파이스, 진한 캐릭터"', buyDate: '2026-06-20', price: 98000, tag: '', imgSrc: '와일드터키 레어브리드.png' },
+
+            // 3. Blended (7 bottles)
+            { id: 1, no: 'No.01', name: '산토리 가쿠빈', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '일본', volume: '700ml', abv: '40.0%', cask: '블렌디드', note: '"하이볼의 정석, 시트러스"', buyDate: '2024-01-05', price: 39800, tag: '2026.01.05 완병', imgSrc: '산토리 가쿠빈.png' },
+            { id: 3, no: 'No.03', name: '조니워커 블랙', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '500ml', abv: '40.0%', cask: '스모키 피트', note: '"스모키, 달콤한 과일"', buyDate: '2024-03-01', price: 32000, tag: '2026.07.16 완병', imgSrc: '조니워커 블랙.png' },
+            { id: 13, no: 'No.13', name: '조니워커 15년 셰리 피니시', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '40.0%', cask: '셰리 피니시', note: '"부드러운 세리, 달콤함"', buyDate: '2025-11-01', price: 79000, tag: '', imgSrc: '조니워커 15년 셰리 피니시.png' },
+            { id: 20, no: 'No.20', name: '듀어스 15년 미즈나라', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '영국', volume: '700ml', abv: '40.0%', cask: '미즈나라 피니시', note: '"은은한 은향, 스파이스"', buyDate: '2026-04-20', price: 68000, tag: '', imgSrc: '듀어스 15년 미즈나라.png' },
+            { id: 23, no: 'No.23', name: '조니워커 그린', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.0%', cask: '블렌디드 몰트', note: '"자연스런 은은한 피트와 과일"', buyDate: '2026-05-10', price: 85000, tag: '독일산 잔', imgSrc: '조니워커 그린.png' },
+            { id: 25, no: 'No.25', name: '노마드 리저브 10년', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '스코틀랜드', volume: '700ml', abv: '43.1%', cask: '아웃랜드 셰리 피니시', note: '"달콤한 세리, 바닐라"', buyDate: '2026-05-20', price: 72000, tag: '', imgSrc: '노마드 리저브 10년.png' },
+            { id: 26, no: 'No.26', name: '제임슨 블랙배럴', category: 'BLENDED WHISKY (블렌디드 위스키)', country: '아일랜드', volume: '700ml', abv: '40.0%', cask: '이중 차드 오크', note: '"극상의 부드러움, 바닐라"', buyDate: '2026-06-01', price: 55000, tag: '', imgSrc: '제임슨 블랙배럴.png' },
+
+            // 4. Tennessee (1 bottle)
+            { id: 15, no: 'No.15', name: '젠틀맨 잭', category: 'TENNESSEE WHISKY (테네시 위스키)', country: '미국', volume: '700ml', abv: '40.0%', cask: 'Charcoal Mellowed', note: '"극강의 부드러움, 단풍나무 정제"', buyDate: '2025-12-01', price: 58000, tag: '하이볼 전용', imgSrc: '젠틀맨 잭.png' }
+        ];
+
+        // Load persisted data or default
+        let whiskyData = [];
+        function loadWhiskyData() {
+            try {
+                const saved = localStorage.getItem('whiskyCollectionData');
+                if (saved) {
+                    whiskyData = JSON.parse(saved);
+                } else {
+                    whiskyData = JSON.parse(JSON.stringify(defaultWhiskyData));
+                }
+            } catch (e) {
+                console.error("Failed to load from localStorage:", e);
+                whiskyData = JSON.parse(JSON.stringify(defaultWhiskyData));
+            }
+        }
+
+        // Save data to LocalStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('whiskyCollectionData', JSON.stringify(whiskyData));
+            } catch (e) {
+                console.error("Failed to save to localStorage:", e);
+            }
+        }
+
+        // Reset to default
+        function resetToDefaultData() {
+            if (confirm('모든 데이터(가격, 이미지, 추가한 위스키 등)를 초기 기본 데이터로 복원하시겠습니까?')) {
+                whiskyData = JSON.parse(JSON.stringify(defaultWhiskyData));
+                saveToLocalStorage();
+                renderPoster();
+                if (window.syncAllDataToCloud) {
+                    window.syncAllDataToCloud(whiskyData);
+                }
+            }
+        }
+
+        function getBottleSvg(name) {
+            return `
+                <div class="w-full h-full flex flex-col items-center justify-center p-2 text-center bg-black/40 rounded-lg">
+                    <svg viewBox="0 0 100 240" class="w-14 h-28 drop-shadow-[0_0_8px_rgba(223,183,67,0.3)]">
+                        <path d="M 42 10 L 58 10 L 58 35 L 42 35 Z" fill="#dfb743" />
+                        <path d="M 44 35 L 56 35 L 56 60 L 44 60 Z" fill="#9e7b1e" />
+                        <path d="M 44 60 C 35 75, 25 90, 25 110 L 25 220 C 25 226, 30 230, 36 230 L 64 230 C 70 230, 75 226, 75 220 L 75 110 C 75 90, 65 75, 56 60 Z" fill="#1a150b" stroke="#dfb743" stroke-width="2.5" />
+                        <rect x="30" y="115" width="40" height="75" rx="3" fill="#2a2010" stroke="#7a5e18" stroke-width="1.5" />
+                        <text x="50" y="155" fill="#ffe89c" font-size="9" font-weight="bold" text-anchor="middle">WHISKY</text>
+                    </svg>
+                    <span class="text-[10px] text-gold/80 font-bold mt-1 line-clamp-1">${name}</span>
+                </div>
+            `;
+        }
+
+        function handleImageError(imgEl, name) {
+            imgEl.onerror = null;
+            if (imgEl.parentElement) {
+                imgEl.parentElement.innerHTML = getBottleSvg(name);
+            }
+        }
+
+        function calculateDays(buyDate) {
+            if (!buyDate) return '-';
+            const start = new Date(buyDate);
+            const today = new Date();
+            const diffTime = today - start;
+            if (isNaN(diffTime) || diffTime < 0) return '0일 보관';
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return `${diffDays}일 보관`;
+        }
+
+        // Flood fill outer white border removal
+        function removeOuterWhiteBackground(imgElement, callback) {
+            if (!imgElement) { callback(null); return; }
+
+            const processImage = () => {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const w = imgElement.naturalWidth || imgElement.width;
+                    const h = imgElement.naturalHeight || imgElement.height;
+                    if (!w || !h) { callback(imgElement.src); return; }
+
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(imgElement, 0, 0);
+
+                    const imgData = ctx.getImageData(0, 0, w, h);
+                    const data = imgData.data;
+                    const visited = new Uint8Array(w * h);
+                    const queue = [];
+
+                    function isBackgroundWhite(idx) {
+                        const r = data[idx];
+                        const g = data[idx + 1];
+                        const b = data[idx + 2];
+                        const a = data[idx + 3];
+                        if (a === 0) return true;
+                        return (r > 210 && g > 210 && b > 210 && Math.abs(r - g) < 25 && Math.abs(g - b) < 25);
+                    }
+
+                    for (let x = 0; x < w; x++) {
+                        let idxTop = x * 4;
+                        if (isBackgroundWhite(idxTop)) { queue.push(x); visited[x] = 1; }
+                        let idxBottom = ((h - 1) * w + x) * 4;
+                        if (isBackgroundWhite(idxBottom)) { queue.push((h - 1) * w + x); visited[(h - 1) * w + x] = 1; }
+                    }
+                    for (let y = 0; y < h; y++) {
+                        let idxLeft = (y * w) * 4;
+                        if (!visited[y * w] && isBackgroundWhite(idxLeft)) { queue.push(y * w); visited[y * w] = 1; }
+                        let idxRight = (y * w + (w - 1)) * 4;
+                        if (!visited[y * w + (w - 1)] && isBackgroundWhite(idxRight)) { queue.push(y * w + (w - 1)); visited[y * w + (w - 1)] = 1; }
+                    }
+
+                    let head = 0;
+                    while (head < queue.length) {
+                        const p = queue[head++];
+                        const px = p % w;
+                        const py = Math.floor(p / w);
+                        const dataIdx = p * 4;
+
+                        data[dataIdx + 3] = 0;
+
+                        const neighbors = [];
+                        if (px > 0) neighbors.push(p - 1);
+                        if (px < w - 1) neighbors.push(p + 1);
+                        if (py > 0) neighbors.push(p - w);
+                        if (py < h - 1) neighbors.push(p + w);
+
+                        for (let i = 0; i < neighbors.length; i++) {
+                            const np = neighbors[i];
+                            if (!visited[np]) {
+                                visited[np] = 1;
+                                if (isBackgroundWhite(np * 4)) {
+                                    queue.push(np);
+                                }
+                            }
+                        }
+                    }
+
+                    ctx.putImageData(imgData, 0, 0);
+                    callback(canvas.toDataURL('image/png'));
+                } catch(e) {
+                    callback(imgElement.src);
+                }
+            };
+
+            if (imgElement.complete && imgElement.naturalWidth) {
+                processImage();
+            } else {
+                imgElement.onload = processImage;
+                imgElement.onerror = () => callback(imgElement.src);
+            }
+        }
+
+        function removeImageWhiteBg(imgEl) {
+            if (imgEl.dataset.bgProcessed) return;
+            imgEl.dataset.bgProcessed = "true";
+            removeOuterWhiteBackground(imgEl, function(transparentPngUrl) {
+                if (transparentPngUrl) {
+                    imgEl.src = transparentPngUrl;
+                }
+            });
+        }
+
+        function renderPoster() {
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            if (!categoriesContainer) return;
+
+            categoriesContainer.innerHTML = '';
+
+            // Calculate overall stats
+            let totalCount = whiskyData.length;
+            let totalPrice = whiskyData.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+            let avgPrice = totalCount > 0 ? Math.round(totalPrice / totalCount) : 0;
+
+            document.getElementById('statTotalCount').innerText = `총 ${totalCount}병`;
+            document.getElementById('statTotalPrice').innerText = `₩ ${totalPrice.toLocaleString()}`;
+            document.getElementById('statAvgPrice').innerText = `₩ ${avgPrice.toLocaleString()}`;
+
+            // Group by category
+            const grouped = {};
+            whiskyData.forEach(item => {
+                const cat = item.category || 'OTHER WHISKY';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(item);
+            });
+
+            const categoryOrder = [
+                'SINGLE MALT WHISKY (싱글몰트 위스키)',
+                'BOURBON WHISKY (버번 위스키)',
+                'BLENDED WHISKY (블렌디드 위스키)',
+                'TENNESSEE WHISKY (테네시 위스키)'
+            ];
+
+            categoryOrder.forEach(catName => {
+                const items = grouped[catName];
+                if (!items || items.length === 0) return;
+
+                const categorySection = document.createElement('div');
+                categorySection.className = 'space-y-4';
+
+                // Category Header Title
+                categorySection.innerHTML = `
+                    <div class="flex items-center gap-3 border-b border-gold-border/40 pb-2">
+                        <div class="w-2.5 h-6 bg-gradient-to-b from-amber-400 to-amber-700 rounded-sm"></div>
+                        <h2 class="text-base md:text-xl font-bold text-gold tracking-wider">${catName}</h2>
+                        <span class="text-xs bg-amber-950/80 text-amber-300 border border-gold-border/40 px-2 py-0.5 rounded-full font-semibold">
+                            ${items.length} Bottles
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+                        ${items.map(item => `
+                            <div onclick="openEditModal(${item.id})" class="gold-card-frame rounded-xl p-3 flex flex-col justify-between cursor-pointer relative group">
+                                
+                                <!-- Card Header: No. & Tag -->
+                                <div class="flex items-center justify-between text-[11px] font-bold mb-1">
+                                    <span class="text-gold tracking-wider">${item.no}</span>
+                                    ${item.tag ? `<span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.2 rounded text-[10px] truncate max-w-[80px]">${item.tag}</span>` : ''}
+                                </div>
+
+                                <!-- Bottle Image Box -->
+                                <div class="h-36 md:h-40 my-2 flex items-center justify-center p-1 relative">
+                                    <img src="${item.imgSrc}" 
+                                         alt="${item.name}" 
+                                         onerror="handleImageError(this, '${item.name}')" 
+                                         onload="removeImageWhiteBg(this)" 
+                                         class="max-h-full max-w-full object-contain filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.7)] transition transform group-hover:scale-105 duration-200">
+                                </div>
+
+                                <!-- Whisky Information Details -->
+                                <div class="space-y-1 border-t border-gold-border/20 pt-2 text-center">
+                                    <h3 class="text-xs font-bold text-gray-100 line-clamp-1 group-hover:text-gold transition-colors">${item.name}</h3>
+                                    
+                                    <div class="text-[10px] text-gray-400 flex items-center justify-center gap-1 font-medium">
+                                        <span>${item.country || '스코틀랜드'}</span> • 
+                                        <span>${item.volume || '700ml'}</span> • 
+                                        <span class="text-amber-300">${item.abv || '40.0%'}</span>
+                                    </div>
+
+                                    ${item.cask ? `<p class="text-[10px] text-gray-400/90 line-clamp-1 italic">${item.cask}</p>` : ''}
+                                    ${item.note ? `<p class="text-[10px] text-gold-light/90 font-medium line-clamp-1 mt-0.5">${item.note}</p>` : ''}
+
+                                    <!-- Price & Purchase Duration -->
+                                    <div class="mt-2 pt-1 border-t border-neutral-800 flex items-center justify-between text-[10px] text-gray-400">
+                                        <span class="text-emerald-400 font-bold">₩ ${(Number(item.price) || 0).toLocaleString()}</span>
+                                        <span class="text-gray-500">${calculateDays(item.buyDate)}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Hover Overlay Edit Badge -->
+                                <div class="absolute inset-0 bg-black/40 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded-xl no-print">
+                                    <span class="bg-gold text-black text-xs font-extrabold px-3 py-1.5 rounded-lg shadow-lg flex items-center gap-1">
+                                        <i class="fa-solid fa-pen"></i> 수정
+                                    </span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                categoriesContainer.appendChild(categorySection);
+            });
+        }
+
+        function openAddModal() {
+            document.getElementById('editId').value = '';
+            document.getElementById('modalTitle').innerText = '위스키 추가';
+            document.getElementById('whiskyForm').reset();
+            document.getElementById('btnDelete').classList.add('hidden');
+            document.getElementById('whiskyModal').classList.remove('hidden');
+        }
+
+        function openEditModal(id) {
+            const item = whiskyData.find(w => w.id === id);
+            if (!item) return;
+
+            document.getElementById('editId').value = item.id;
+            document.getElementById('modalTitle').innerText = `${item.name} 정보 수정`;
+            document.getElementById('inputNo').value = item.no || '';
+            document.getElementById('inputName').value = item.name || '';
+            document.getElementById('inputCategory').value = item.category || 'SINGLE MALT WHISKY (싱글몰트 위스키)';
+            document.getElementById('inputCountry').value = item.country || '';
+            document.getElementById('inputVolume').value = item.volume || '';
+            document.getElementById('inputAbv').value = item.abv || '';
+            document.getElementById('inputCask').value = item.cask || '';
+            document.getElementById('inputNote').value = item.note || '';
+            document.getElementById('inputBuyDate').value = item.buyDate || '';
+            document.getElementById('inputPrice').value = item.price || 0;
+            document.getElementById('inputTag').value = item.tag || '';
+            document.getElementById('inputImgSrc').value = item.imgSrc || '';
+
+            document.getElementById('btnDelete').classList.remove('hidden');
+            document.getElementById('whiskyModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('whiskyModal').classList.add('hidden');
+        }
+
+        // Google Cloud Management Modal Functions
+        function openGoogleCloudModal() {
+            document.getElementById('googleCloudModal').classList.remove('hidden');
+        }
+
+        function closeGoogleCloudModal() {
+            document.getElementById('googleCloudModal').classList.add('hidden');
+        }
+
+        function exportGoogleCloudBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(whiskyData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `google_cloud_whisky_backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importGoogleCloudBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        whiskyData = imported;
+                        saveToLocalStorage();
+                        renderPoster();
+                        if (window.syncAllDataToCloud) {
+                            window.syncAllDataToCloud(whiskyData);
+                        }
+                        closeGoogleCloudModal();
+                    }
+                } catch (err) {
+                    console.error("Failed to parse backup JSON:", err);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function manualSyncToGoogleCloud() {
+            if (window.syncAllDataToCloud) {
+                window.syncAllDataToCloud(whiskyData);
+            }
+        }
+
+        function openBgRemoverModal() {
+            document.getElementById('bgRemoverModal').classList.remove('hidden');
+        }
+
+        function closeBgRemoverModal() {
+            document.getElementById('bgRemoverModal').classList.add('hidden');
+        }
+
+        function syncPngExtensions() {
+            let count = 0;
+            whiskyData.forEach(item => {
+                if (!item.imgSrc.toLowerCase().endsWith('.png') && !item.imgSrc.startsWith('data:')) {
+                    item.imgSrc = `${item.name}.png`;
+                    count++;
+                }
+            });
+            saveToLocalStorage();
+            renderPoster();
+            const textEl = document.getElementById('extSyncText');
+            if (textEl) {
+                textEl.innerText = `동기화 완료 (${whiskyData.length}개)`;
+                setTimeout(() => textEl.innerText = 'PNG 파일명 동기화', 2000);
+            }
+        }
+
+        function cleanAllWhiteBackgrounds() {
+            let pending = whiskyData.length;
+            if (pending === 0) return;
+
+            whiskyData.forEach(item => {
+                if (item.imgSrc) {
+                    const tempImg = new Image();
+                    tempImg.crossOrigin = "Anonymous";
+                    tempImg.src = item.imgSrc;
+                    removeOuterWhiteBackground(tempImg, function(cleanDataUrl) {
+                        if (cleanDataUrl) {
+                            item.imgSrc = cleanDataUrl;
+                        }
+                        pending--;
+                        if (pending === 0) {
+                            saveToLocalStorage();
+                            renderPoster();
+                        }
+                    });
+                } else {
+                    pending--;
+                    if (pending === 0) {
+                        saveToLocalStorage();
+                        renderPoster();
+                    }
+                }
+            });
+        }
+
+        function processSingleImageTool(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const originalFileName = file.name.replace(/\.[^/.]+$/, "") + "_no_bg.png";
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const tempImg = new Image();
+                tempImg.src = e.target.result;
+                tempImg.onload = function() {
+                    removeOuterWhiteBackground(tempImg, function(transparentPngUrl) {
+                        const previewArea = document.getElementById('removerPreviewArea');
+                        const resultImg = document.getElementById('removerResultImg');
+                        const downloadBtn = document.getElementById('btnDownloadPng');
+
+                        resultImg.src = transparentPngUrl;
+                        downloadBtn.href = transparentPngUrl;
+                        downloadBtn.download = originalFileName;
+
+                        previewArea.classList.remove('hidden');
+                    });
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleBatchImageUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                const cleanFileName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const tempImg = new Image();
+                    tempImg.src = e.target.result;
+                    tempImg.onload = function() {
+                        removeOuterWhiteBackground(tempImg, function(cleanDataUrl) {
+                            whiskyData.forEach(item => {
+                                if (item.name.trim() === cleanFileName.trim() || item.imgSrc === file.name) {
+                                    item.imgSrc = cleanDataUrl;
+                                }
+                            });
+                            saveToLocalStorage();
+                            renderPoster();
+                        });
+                    };
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function handleSingleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const tempImg = new Image();
+                    tempImg.src = evt.target.result;
+                    tempImg.onload = function() {
+                        removeOuterWhiteBackground(tempImg, function(cleanDataUrl) {
+                            document.getElementById('inputImgSrc').value = cleanDataUrl;
+                        });
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveWhiskyForm(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editId').value;
+
+            const newItem = {
+                id: editId ? Number(editId) : Date.now(),
+                no: document.getElementById('inputNo').value || 'No.00',
+                name: document.getElementById('inputName').value,
+                category: document.getElementById('inputCategory').value,
+                country: document.getElementById('inputCountry').value || '스코틀랜드',
+                volume: document.getElementById('inputVolume').value || '700ml',
+                abv: document.getElementById('inputAbv').value || '40.0%',
+                cask: document.getElementById('inputCask').value || '',
+                note: document.getElementById('inputNote').value || '',
+                buyDate: document.getElementById('inputBuyDate').value || '',
+                price: Number(document.getElementById('inputPrice').value || 0),
+                tag: document.getElementById('inputTag').value || '',
+                imgSrc: document.getElementById('inputImgSrc').value || `${document.getElementById('inputName').value}.png`
+            };
+
+            if (editId) {
+                const idx = whiskyData.findIndex(w => w.id === Number(editId));
+                if (idx !== -1) whiskyData[idx] = newItem;
+            } else {
+                whiskyData.push(newItem);
+            }
+
+            saveToLocalStorage();
+            closeModal();
+            renderPoster();
+
+            // Cloud Save
+            if (window.saveSingleWhiskyToCloud) {
+                window.saveSingleWhiskyToCloud(newItem);
+            }
+        }
+
+        function deleteCurrentWhisky() {
+            const editId = document.getElementById('editId').value;
+            if (editId) {
+                const idToDelete = Number(editId);
+                whiskyData = whiskyData.filter(w => w.id !== idToDelete);
+                saveToLocalStorage();
+                closeModal();
+                renderPoster();
+
+                // Cloud Delete
+                if (window.deleteSingleWhiskyFromCloud) {
+                    window.deleteSingleWhiskyFromCloud(idToDelete);
+                }
+            }
+        }
+
+        function exportPosterImage() {
+            const poster = document.getElementById('posterContent');
+            html2canvas(poster, {
+                scale: 2.5,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#0a0907'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'MY_WHISKY_COLLECTION_POSTER.jpg';
+                link.href = canvas.toDataURL('image/jpeg', 0.95);
+                link.click();
+            }).catch(err => {
+                console.error('Export Error:', err);
+            });
+        }
+
+        // Initialize display on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadWhiskyData();
+            renderPoster();
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global App & Firebase Config Resolution
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'whisky-collection-app';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDemoKeyWhiskyCollectionSyncApp",
+            authDomain: "whisky-collection.firebaseapp.com",
+            projectId: "whisky-collection",
+            storageBucket: "whisky-collection.appspot.com",
+            messagingSenderId: "1029384756",
+            appId: "1:1029384756:web:abcd1234efgh"
+        };
+
+        let app, auth, db;
+        let currentUser = null;
+        let unsubscribeSnapshot = null;
+
+        function updateCloudUI(status, message, userId = null) {
+            const badge = document.getElementById('cloudStatusBadge');
+            const uidDisplay = document.getElementById('cloudUserIdDisplay');
+            const modalStatusText = document.getElementById('modalCloudStatusText');
+            const modalUserId = document.getElementById('modalCloudUserId');
+
+            if (badge) {
+                if (status === 'syncing') {
+                    badge.className = "bg-sky-500/20 text-sky-300 border border-sky-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
+                    badge.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-[9px]"></i><span>${message}</span>`;
+                } else if (status === 'synced') {
+                    badge.className = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
+                    badge.innerHTML = `<i class="fa-brands fa-google text-[9px]"></i><span>${message}</span>`;
+                } else if (status === 'error') {
+                    badge.className = "bg-red-500/20 text-red-300 border border-red-500/40 text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1 font-medium";
+                    badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-[9px]"></i><span>${message}</span>`;
+                }
+            }
+
+            if (userId && uidDisplay) {
+                uidDisplay.innerText = `(Google Cloud ID: ${userId})`;
+                uidDisplay.classList.remove('hidden');
+            }
+
+            if (modalStatusText) {
+                modalStatusText.innerText = message;
+                modalStatusText.className = status === 'synced' ? "text-emerald-400 font-bold" : "text-amber-400 font-bold";
+            }
+            if (modalUserId && userId) {
+                modalUserId.innerText = userId;
+            }
+        }
+
+        async function initCloudSync() {
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                updateCloudUI('syncing', 'Google Cloud 인증 처리 중...');
+
+                // Authenticate before queries
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (!user) return;
+                    currentUser = user;
+                    const userId = user.uid;
+
+                    updateCloudUI('syncing', 'Google Cloud 동기화 중...', userId);
+
+                    // Firestore Path according to Mandatory Rules
+                    const whiskiesColRef = collection(db, 'artifacts', appId, 'users', userId, 'whiskies');
+
+                    // Real-time Firestore Listener
+                    if (unsubscribeSnapshot) unsubscribeSnapshot();
+
+                    unsubscribeSnapshot = onSnapshot(whiskiesColRef, async (snapshot) => {
+                        if (snapshot.empty) {
+                            // First time cloud setup: Seed with default/local data
+                            updateCloudUI('syncing', 'Google Cloud 초기 데이터 생성 중...', userId);
+                            await seedInitialCloudData(userId, whiskyData);
+                            updateCloudUI('synced', 'Google Cloud 동기화 활성', userId);
+                        } else {
+                            const cloudItems = [];
+                            snapshot.forEach((doc) => {
+                                cloudItems.push(doc.data());
+                            });
+                            // Sort by ID or original order
+                            cloudItems.sort((a, b) => (a.id || 0) - (b.id || 0));
+                            whiskyData = cloudItems;
+                            saveToLocalStorage();
+                            renderPoster();
+                            updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', userId);
+                        }
+                    }, (err) => {
+                        console.error("Firestore onSnapshot Error:", err);
+                        updateCloudUI('error', 'Google Cloud 동기화 오류 (로컬 모드)');
+                    });
+                });
+
+            } catch (err) {
+                console.error("Firebase Auth/Sync Initialization Error:", err);
+                updateCloudUI('error', '로컬저장소 모드 사용 중');
+            }
+        }
+
+        async function seedInitialCloudData(userId, items) {
+            if (!currentUser || !db) return;
+            try {
+                const batch = writeBatch(db);
+                items.forEach((item) => {
+                    const docRef = doc(db, 'artifacts', appId, 'users', userId, 'whiskies', String(item.id));
+                    batch.set(docRef, item);
+                });
+                await batch.commit();
+            } catch (e) {
+                console.error("Error seeding initial cloud data:", e);
+            }
+        }
+
+        // Expose Google Cloud Actions to Global Scope
+        window.triggerGoogleCloudLogin = async function() {
+            if (!auth) return;
+            try {
+                updateCloudUI('syncing', 'Google 계정 로그인 중...');
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+            } catch (e) {
+                console.warn("Google Login Popup Note:", e);
+                if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+            }
+        };
+
+        window.saveSingleWhiskyToCloud = async function(item) {
+            if (!currentUser || !db) return;
+            try {
+                updateCloudUI('syncing', 'Google Cloud 저장 중...');
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'whiskies', String(item.id));
+                await setDoc(docRef, item);
+                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
+            } catch (e) {
+                console.error("Cloud Save Error:", e);
+                updateCloudUI('error', 'Google Cloud 저장 실패');
+            }
+        };
+
+        window.deleteSingleWhiskyFromCloud = async function(itemId) {
+            if (!currentUser || !db) return;
+            try {
+                updateCloudUI('syncing', 'Google Cloud 삭제 중...');
+                const docRef = doc(db, 'artifacts', appId, 'users', currentUser.uid, 'whiskies', String(itemId));
+                await deleteDoc(docRef);
+                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
+            } catch (e) {
+                console.error("Cloud Delete Error:", e);
+                updateCloudUI('error', 'Google Cloud 삭제 실패');
+            }
+        };
+
+        window.syncAllDataToCloud = async function(items) {
+            if (!currentUser || !db) return;
+            try {
+                updateCloudUI('syncing', 'Google Cloud 전체 동기화 중...');
+                await seedInitialCloudData(currentUser.uid, items);
+                updateCloudUI('synced', 'Google Cloud 실시간 동기화 완료', currentUser.uid);
+            } catch (e) {
+                console.error("Cloud Full Sync Error:", e);
+                updateCloudUI('error', 'Google Cloud 동기화 실패');
+            }
+        };
+
+        // Initialize Cloud Sync on page load
+        initCloudSync();
+    </script>
+</body>
+</html>
