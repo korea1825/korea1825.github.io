@@ -202,6 +202,11 @@
                 <i class="fa-solid fa-print"></i>
                 <span>PDF / 인쇄</span>
             </button>
+            <!-- Share page -->
+            <button onclick="openShareBuilder()" class="bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 border border-sky-500/40 px-3 py-2 rounded-lg font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>공유용 페이지 만들기</span>
+            </button>
         </div>
     </header>
 
@@ -1239,6 +1244,166 @@
         // 사진 일괄 등록 등 로컬 저장이 일어나는 모든 경우에도 Drive 저장을 예약
         const _origSaveLocal = saveToLocalStorage;
         saveToLocalStorage = function () { _origSaveLocal(); scheduleSave(); };
+
+        // ===== 공유용 읽기 전용 페이지 만들기 =====
+        function shEsc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function shNum(item) {
+            const m = String(item.no || '').match(/\d+/);
+            return m ? parseInt(m[0], 10) : 9999;
+        }
+
+        function shCatRank(cat) {
+            const order = ['SINGLE MALT', 'BOURBON', 'BLENDED', 'TENNESSEE'];
+            const i = order.findIndex(k => String(cat || '').toUpperCase().startsWith(k));
+            return i === -1 ? 99 : i;
+        }
+
+        function renderShareHtml(items, opts, daysFn, dateText) {
+            const cats = [];
+            items.forEach(it => {
+                let g = cats.find(c => c.name === it.category);
+                if (!g) { g = { name: it.category || '기타', list: [] }; cats.push(g); }
+                g.list.push(it);
+            });
+            cats.sort((a, b) => shCatRank(a.name) - shCatRank(b.name));
+            cats.forEach(c => c.list.sort((a, b) => shNum(a) - shNum(b)));
+
+            const total = items.reduce((s, it) => s + (Number(it.price) || 0), 0);
+            const stats = `<div class="stat"><span>보유 수량</span><b>총 ${items.length}병</b></div>` +
+                (opts.price ? `<div class="stat"><span>총 평가액</span><b>₩ ${total.toLocaleString('ko-KR')}</b></div>` : '');
+
+            const card = it => {
+                const meta = [it.country, it.volume, it.abv].filter(Boolean).map(shEsc).join(' · ');
+                const foot = [];
+                if (opts.price) foot.push(`<span class="pr">₩ ${(Number(it.price) || 0).toLocaleString('ko-KR')}</span>`);
+                if (opts.days) foot.push(`<span class="dy">${shEsc(daysFn(it.buyDate))}</span>`);
+                return `<div class="card">
+<div class="top"><span class="no">${shEsc(it.no)}</span>${opts.place && it.place ? `<span class="pl">${shEsc(it.place)}</span>` : ''}</div>
+<div class="im">${opts.tag && it.tag ? `<span class="tg">${shEsc(it.tag)}</span>` : ''}${it._img ? `<img src="${it._img}" alt="${shEsc(it.name)}">` : `<div class="ph"></div>`}</div>
+<h3>${shEsc(it.name)}</h3>
+<div class="mt">${meta}</div>
+${it.cask ? `<div class="ck">${shEsc(it.cask)}</div>` : ''}
+${it.note ? `<div class="nt">${shEsc(it.note)}</div>` : ''}
+${foot.length ? `<div class="ft">${foot.join('')}</div>` : ''}
+</div>`;
+            };
+
+            const sections = cats.map(c => `<section><h2>${shEsc(c.name)} <small>${c.list.length} Bottles</small></h2><div class="grid">${c.list.map(card).join('')}</div></section>`).join('\n');
+
+            return `<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MY WHISKY COLLECTION</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0d0b07;color:#e9e3d3;font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 14px 40px}
+header{text-align:center;padding:10px 0 22px}
+.pill{display:inline-block;border:1px solid #6b5420;color:#c9a227;border-radius:20px;padding:2px 14px;font-size:11px;letter-spacing:2px}
+h1{margin:12px 0 4px;font-size:clamp(26px,6vw,44px);color:#e6c15a;letter-spacing:2px}
+.sub{color:#c9b47a;font-size:13px;margin:0 0 16px}
+.stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.stat{background:#15120b;border:1px solid #2e2715;border-radius:10px;padding:8px 22px;text-align:center}
+.stat span{display:block;font-size:11px;color:#8d8570}.stat b{font-size:18px;color:#34d399}
+section{margin-top:28px}
+h2{font-size:18px;color:#e6c15a;border-left:5px solid #c98a10;padding-left:10px;margin:0 0 12px}
+h2 small{font-size:11px;color:#c9a227;background:#2b2310;border:1px solid #6b5420;border-radius:10px;padding:1px 8px;margin-left:6px;vertical-align:middle}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
+.card{background:#100e09;border:1px solid #4a3a17;border-radius:12px;padding:10px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;gap:6px;min-height:22px}
+.no{font-weight:700;font-size:12px;color:#e6c15a}
+.pl{background:#211c12;border:1px solid #4a3d22;color:#d9cfae;border-radius:10px;padding:1px 8px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.im{position:relative;height:150px;margin:8px 0;display:flex;align-items:center;justify-content:center}
+.im img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 5px 10px rgba(0,0,0,.7))}
+.ph{width:26px;height:80px;border:1px solid #6b5420;border-radius:6px;background:#2a2110}
+.tg{position:absolute;left:0;top:0;z-index:1;background:rgba(201,162,39,.2);border:1px solid rgba(201,162,39,.4);color:#f0c66a;border-radius:6px;padding:1px 6px;font-size:10px;max-width:85%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+h3{margin:0;padding-top:8px;border-top:1px solid #2a2418;text-align:center;font-size:13px;color:#fff}
+.mt{text-align:center;font-size:10px;color:#9d9580;margin-top:3px}
+.ck{text-align:center;font-size:10px;color:#9d9580;font-style:italic;margin-top:3px}
+.nt{text-align:center;font-size:10px;color:#e6c15a;margin-top:3px}
+.ft{display:flex;justify-content:space-between;border-top:1px solid #2a2418;margin-top:8px;padding-top:5px;font-size:10px;color:#8d8570}
+.pr{color:#34d399;font-weight:700}
+footer{text-align:center;color:#6f6955;font-size:11px;margin-top:34px}
+</style></head><body><div class="wrap">
+<header><span class="pill">PRIVATE LIQUOR CABINET</span><h1>MY WHISKY COLLECTION</h1><p class="sub">개인 소장 위스키 컬렉션 메뉴판</p><div class="stats">${stats}</div></header>
+${sections}
+<footer>읽기 전용 공유 페이지 · ${shEsc(dateText)} 기준</footer>
+</div></body></html>`;
+        }
+
+        function shShrink(url, max) {
+            return new Promise(resolve => {
+                if (!url || !String(url).startsWith('data:image')) return resolve('');
+                const im = new Image();
+                im.onload = () => {
+                    const sc = Math.min(1, max / Math.max(im.naturalWidth, im.naturalHeight));
+                    const c = document.createElement('canvas');
+                    c.width = Math.max(1, Math.round(im.naturalWidth * sc));
+                    c.height = Math.max(1, Math.round(im.naturalHeight * sc));
+                    c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+                    let out = c.toDataURL('image/webp', 0.85);
+                    if (!out.startsWith('data:image/webp')) out = c.toDataURL('image/png');
+                    resolve(out);
+                };
+                im.onerror = () => resolve('');
+                im.src = url;
+            });
+        }
+
+        window.openShareBuilder = function () {
+            if (document.getElementById('shareOverlay')) return;
+            const ov = document.createElement('div');
+            ov.id = 'shareOverlay';
+            ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;padding:16px';
+            ov.innerHTML = `<div style="background:#171510;border:1px solid #6b5420;border-radius:14px;max-width:420px;width:100%;padding:20px;color:#e9e3d3;font-size:14px">
+<div style="font-size:17px;font-weight:700;color:#e6c15a;margin-bottom:6px">공유용 페이지 만들기</div>
+<div style="color:#a59d89;font-size:12px;margin-bottom:14px">지금 목록을 사진과 함께 읽기 전용 HTML 파일로 만들어 내려받습니다. 친구에게 보여줄 정보만 골라 주세요.</div>
+<label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="shPrice"> 구매 가격 / 총 평가액 표시</label>
+<label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="shPlace"> 구매 장소 표시</label>
+<label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="shDays"> 보관 일수 표시</label>
+<label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="shTag" checked> 태그(완병, 하이볼 전용 등) 표시</label>
+<div id="shStatus" style="min-height:20px;color:#c9a227;font-size:12px;margin:10px 0 4px"></div>
+<div style="display:flex;gap:8px;justify-content:flex-end">
+<button id="shClose" style="background:#2a2618;color:#e9e3d3;border:1px solid #4a3d22;border-radius:8px;padding:8px 14px;cursor:pointer">닫기</button>
+<button id="shMake" style="background:#c98a10;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer">만들고 내려받기</button>
+</div></div>`;
+            document.body.appendChild(ov);
+            document.getElementById('shClose').onclick = () => ov.remove();
+            document.getElementById('shMake').onclick = async () => {
+                const btn = document.getElementById('shMake'), st = document.getElementById('shStatus');
+                btn.disabled = true;
+                try {
+                    const opts = {
+                        price: document.getElementById('shPrice').checked,
+                        place: document.getElementById('shPlace').checked,
+                        days: document.getElementById('shDays').checked,
+                        tag: document.getElementById('shTag').checked
+                    };
+                    const items = [];
+                    for (let i = 0; i < whiskyData.length; i++) {
+                        st.innerText = `사진 처리 중... (${i + 1}/${whiskyData.length})`;
+                        const it = whiskyData[i];
+                        items.push({ ...it, _img: await shShrink(it.imgSrc, 480) });
+                    }
+                    const d = new Date();
+                    const dateText = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+                    const html = renderShareHtml(items, opts, calculateDays, dateText);
+                    const blob = new Blob([html], { type: 'text/html' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'share.html';
+                    document.body.appendChild(a); a.click(); a.remove();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+                    const mb = (blob.size / 1048576).toFixed(1);
+                    st.innerText = `share.html (${mb}MB) 을 내려받았습니다. GitHub에 올려 주세요.`;
+                } catch (e) {
+                    console.error(e);
+                    st.innerText = '만들기에 실패했습니다. 다시 시도해 주세요.';
+                }
+                btn.disabled = false;
+            };
+        };
 
         // 기존 코드가 호출하는 함수들: 모두 Drive 저장 예약으로 연결
         window.saveSingleWhiskyToCloud = () => scheduleSave();
