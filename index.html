@@ -1196,6 +1196,10 @@
             }
         };
 
+        // 사진 일괄 등록 등 로컬 저장이 일어나는 모든 경우에도 Drive 저장을 예약
+        const _origSaveLocal = saveToLocalStorage;
+        saveToLocalStorage = function () { _origSaveLocal(); scheduleSave(); };
+
         // 기존 코드가 호출하는 함수들: 모두 Drive 저장 예약으로 연결
         window.saveSingleWhiskyToCloud = () => scheduleSave();
         window.deleteSingleWhiskyFromCloud = () => scheduleSave();
